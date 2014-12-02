@@ -1,17 +1,25 @@
 package com.hci.pandemic.pandemic;
 
 import android.app.Activity;
+import android.app.ListActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 
 
-public class Leaderboard extends Activity {
+public class Leaderboard extends ListActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_leaderboard);
+        setContentView(R.layout.simple_list);
+
+
+        String[] values = new String[]{"One", "Two", "Three", "Four"};
+
+        ArrayAdapter<String> adapter = new ListAdapter(this, values);
+        setListAdapter(adapter);
     }
 
 
