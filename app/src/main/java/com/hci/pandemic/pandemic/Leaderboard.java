@@ -3,9 +3,15 @@ package com.hci.pandemic.pandemic;
 import android.app.Activity;
 import android.app.ListActivity;
 import android.os.Bundle;
+import android.text.Layout;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 
 
 public class Leaderboard extends ListActivity {
@@ -16,12 +22,24 @@ public class Leaderboard extends ListActivity {
         setContentView(R.layout.leaderboard_combo);
 
 
-        String[] values = new String[]{"One", "Two", "Three", "Four",
+        final String[] values = new String[]{"One", "Two", "Three", "Four",
             "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven",
             "Twelve", "Thirteen", "Fourteen"};
 
         ArrayAdapter<String> adapter = new ListAdapter(this, values);
         setListAdapter(adapter);
+
+        ListView lv = getListView();
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.i("Info", String.valueOf(position));
+                TextView tv = (TextView) findViewById(R.id.leaderboard_popup);
+                tv.setText("THIS IS A MOTHERFUCKING TEST");
+                tv.setVisibility(View.VISIBLE);
+            }
+        });
+
     }
 
 
