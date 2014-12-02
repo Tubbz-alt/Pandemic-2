@@ -13,10 +13,12 @@ public class Leaderboard extends ListActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.simple_list);
+        setContentView(R.layout.leaderboard_combo);
 
 
-        String[] values = new String[]{"One", "Two", "Three", "Four"};
+        String[] values = new String[]{"One", "Two", "Three", "Four",
+            "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven",
+            "Twelve", "Thirteen", "Fourteen"};
 
         ArrayAdapter<String> adapter = new ListAdapter(this, values);
         setListAdapter(adapter);
