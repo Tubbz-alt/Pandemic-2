@@ -6,7 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class upgrade_screen extends Activity {
+public class UpgradeScreen extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
