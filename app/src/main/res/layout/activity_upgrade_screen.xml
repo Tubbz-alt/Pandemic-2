@@ -11,12 +11,24 @@ android:layout_width="fill_parent">
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/topInfoBar"
+        android:text="Hello World"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:textSize="20dip"
+        android:gravity="center"
+        android:layout_gravity="top"
+        android:textColor="#FF6600"
+        android:background="#000000"/>
+
+    <TextView
         android:id="@+id/topText"
         android:text="Hello World"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="120dp"
         android:textSize="20dip"
-        android:layout_gravity="top" />
+        android:gravity="center"
+        android:layout_below="@id/topInfoBar" />
 
     <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_below="@id/topText"
