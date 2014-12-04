@@ -1,9 +1,14 @@
-package com.hci.pandemic.pandemic;
+package com.hci.pandemic.pandemic.upgrade_screen;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+
+import com.hci.pandemic.pandemic.R;
 
 
 public class UpgradeScreen extends Activity {
@@ -12,8 +17,9 @@ public class UpgradeScreen extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upgrade_screen);
+        Button button = (Button) findViewById(R.id.button01);
+        button.setOnClickListener(new SymptomsOnClickListener());
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -33,4 +39,5 @@ public class UpgradeScreen extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 }

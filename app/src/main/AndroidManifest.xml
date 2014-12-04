@@ -21,7 +21,7 @@
             android:label="@string/title_activity_leaderboard" >
         </activity>
         <activity
-            android:name=".UpgradeScreen"
+            android:name=".upgrade_screen.UpgradeScreen"
             android:label="@string/title_activity_upgrade_screen" >
         </activity>
     </application>
