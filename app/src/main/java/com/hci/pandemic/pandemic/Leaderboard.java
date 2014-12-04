@@ -3,6 +3,7 @@ package com.hci.pandemic.pandemic;
 import android.app.ListActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,6 +30,11 @@ public class Leaderboard extends ListActivity {
         final TextView tv = (TextView) findViewById(R.id.leaderboard_popup);
 
         ListView lv = getListView();
+
+        LayoutInflater inflater = getLayoutInflater();
+        View header = inflater.inflate(R.layout.header, lv, false);
+        lv.addHeaderView(header, null, false);
+
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
