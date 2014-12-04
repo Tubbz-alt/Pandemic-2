@@ -20,9 +20,10 @@ public class Leaderboard extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.leaderboard_combo);
 
-        final String[] values = new String[]{"One", "Two", "Three", "Four",
-            "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven",
-            "Twelve", "Thirteen", "Fourteen"};
+        final String[] values = new String[]{"Player One", "Player Two",
+            "Player Three", "Player Four", "Player Five", "Player Six",
+            "Player Seven", "Player Eight", "Player Nine", "Player Ten", "Player Eleven",
+            "Player Twelve", "Player Thirteen", "Player Fourteen"};
 
         ArrayAdapter<String> adapter = new ListAdapter(this, values);
         setListAdapter(adapter);
@@ -39,7 +40,7 @@ public class Leaderboard extends ListActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.i("Info", String.valueOf(position));
-                tv.setText("THIS IS A MOTHERFUCKING TEST");
+                tv.setText("THIS IS A MOTHERFUCKING DESCRIPTION");
                 tv.setVisibility(View.VISIBLE);
             }
         });
