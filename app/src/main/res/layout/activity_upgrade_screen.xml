@@ -1,0 +1,158 @@
+<!--relative layout, have table be second child
+-->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_height="fill_parent"
+android:layout_width="fill_parent">
+
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/leftTopInfoBar"
+        android:text="Hello World"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:textSize="20dip"
+        android:gravity="center_vertical"
+        android:layout_gravity="top"
+        android:textColor="#FFFFFF"
+        android:background="#580000"/>
+
+    <TextView
+        android:id="@+id/rightTopInfoBar"
+        android:text="Evolution Points"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:textSize="20dip"
+        android:gravity="center"
+        android:layout_gravity="top"
+        android:textColor="#FFFFFF"
+        android:background="#580000"/>
+
+    <TextView
+        android:id="@+id/topText"
+        android:text="&lt;insert users stats&gt;"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:textSize="20dip"
+        android:gravity="center"
+        android:layout_below="@id/leftTopInfoBar" />
+
+    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_below="@id/topText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/root"
+        android:stretchColumns="*"
+        android:background="#580000">
+        <TableRow android:layout_margin="0dip" android:paddingBottom="1dp"
+            android:paddingTop="1dp" android:id="@+id/first_level">
+            <Button android:id="@+id/button_coughing"
+                android:layout_width="0dip"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:padding="15dip"
+                android:textColor="#C00000"
+                android:text="Coughing" />
+            <Button android:id="@+id/button_sneezing"
+                android:layout_width="0dip"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:padding="15dip"
+                android:textColor="#C00000"
+                android:text="Sneezing" />
+            <Button android:id="@+id/button_sweating"
+                android:layout_width="0dip"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:padding="15dip"
+                android:textColor="#C00000"
+                android:text="Sweating"/>
+        </TableRow>
+        <TableRow android:layout_margin="0dip" android:paddingBottom="1dp"
+            android:id="@+id/second_level">
+            <Button android:id="@+id/button_chills"
+                android:layout_width="0dip"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:padding="15dip"
+                android:textColor="#C00000"
+                android:text="Chills"/>
+            <Button android:id="@+id/button_fatigue"
+                android:layout_width="0dip"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:padding="15dip"
+                android:textColor="#C00000"
+                android:text="Fatigue"/>
+            <Button android:id="@+id/button_nausea"
+                android:layout_width="0dip"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:padding="15dip"
+                android:textColor="#C00000"
+                android:text="Nausea"/>
+        </TableRow>
+        <TableRow android:layout_margin="0dip" android:paddingBottom="1dp"
+            android:id="@+id/third_level">
+            <Button android:id="@+id/button_vomit"
+                android:layout_width="0dip"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:padding="15dip"
+                android:textColor="#C00000"
+                android:text="Vomit"/>
+            <Button android:id="@+id/button_diarrhea"
+                android:layout_width="0dip"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:padding="15dip"
+                android:textColor="#C00000"
+                android:text="Diarrhea"/>
+            <Button android:id="@+id/button_fever"
+                android:layout_width="0dip"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:padding="15dip"
+                android:textColor="#C00000"
+                android:text="Fever"/>
+        </TableRow><TableRow android:layout_margin="0dip" android:paddingBottom="1dp"
+        android:id="@+id/fourth_level">
+        <Button android:id="@+id/button_blindness"
+            android:layout_width="0dip"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:padding="15dip"
+            android:textColor="#C00000"
+            android:text="Blindness" />
+        <Button android:id="@+id/button_kidneyfailure"
+            android:layout_width="0dip"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:padding="15dip"
+            android:textColor="#C00000"
+            android:textSize="13sp"
+            android:text="Kidney Failure" />
+        <Button android:id="@+id/button_hemorrhaging"
+            android:layout_width="0dip"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:padding="15dip"
+            android:textColor="#C00000"
+            android:textSize="12sp"
+            android:text="Hemorrhaging"/>
+    </TableRow>
+    </TableLayout>
+
+    <TextView
+        android:id="@+id/bottomText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dip"
+        android:layout_gravity="bottom" />
+</RelativeLayout>
+</RelativeLayout>

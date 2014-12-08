@@ -24,12 +24,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.hci.pandemic.pandemic.Leaderboard"
+            android:name=".Leaderboard"
             android:label="@string/title_activity_leaderboard" >
         </activity>
         <activity
             android:name=".MapActivity"
             android:label="@string/title_activity_map" >
+        </activity>
+
+        <activity
+            android:name=".upgrade_screen.UpgradeScreen"
+            android:label="@string/title_activity_upgrade_screen" >
         </activity>
 
         <meta-data
@@ -38,6 +43,7 @@
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyB2-iapDy8suLYa8DkqngRTlMM14Go96U8" />
+
     </application>
 
 </manifest>
