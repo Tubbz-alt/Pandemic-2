@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import com.hci.pandemic.pandemic.upgrade_screen.UpgradeScreen;
 
 // izzy wuz here
 public class MainActivity extends Activity {
@@ -16,6 +17,14 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        final Button to_upgrade_screen = (Button) findViewById(R.id.upgrade_screen);
+        to_upgrade_screen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent upgrade_screen_intent = new Intent(MainActivity.this, UpgradeScreen.class);
+                MainActivity.this.startActivity(upgrade_screen_intent);
+            }
+        });
 
         final Button to_leaderboard = (Button) findViewById(R.id.leaderboard);
         to_leaderboard.setOnClickListener(new View.OnClickListener() {
