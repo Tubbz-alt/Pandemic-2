@@ -4,10 +4,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 
+import com.hci.pandemic.pandemic.Util;
 import com.hci.pandemic.pandemic.R;
 
 
@@ -24,7 +23,7 @@ public class UpgradeScreen extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.upgrade_screen, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
@@ -34,10 +33,21 @@ public class UpgradeScreen extends Activity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.map_screen_menu) {
+            Util.launchMapActivity(this);
+            return true;
+        } else if (id == R.id.upgrade_screen_menu) {
+            Util.launchUpgradeScreenActivity(this);
+            return true;
+        } else if (id == R.id.leaderboard_screen_menu) {
+            Util.launchLeaderboardActivity(this);
             return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
+
 
 }

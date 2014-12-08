@@ -1,15 +1,12 @@
 package com.hci.pandemic.pandemic;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import com.hci.pandemic.pandemic.upgrade_screen.UpgradeScreen;
 
-// izzy wuz here
 public class MainActivity extends Activity {
 
     @Override
@@ -17,21 +14,30 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // button that launches the upgrade screen activity
         final Button to_upgrade_screen = (Button) findViewById(R.id.upgrade_screen);
         to_upgrade_screen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent upgrade_screen_intent = new Intent(MainActivity.this, UpgradeScreen.class);
-                MainActivity.this.startActivity(upgrade_screen_intent);
+                Util.launchUpgradeScreenActivity(getApplicationContext());
             }
         });
 
+        //button that launches the leaderboard activity
         final Button to_leaderboard = (Button) findViewById(R.id.leaderboard);
         to_leaderboard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent leaderboard_intent = new Intent(MainActivity.this, Leaderboard.class);
-                MainActivity.this.startActivity(leaderboard_intent);
+                Util.launchLeaderboardActivity(getApplicationContext());
+            }
+        });
+
+        // button that launches the map activity
+        final Button to_map_screen = (Button) findViewById(R.id.map_screen_activity);
+        to_map_screen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Util.launchMapActivity(getApplicationContext());
             }
         });
     }
@@ -52,16 +58,18 @@ public class MainActivity extends Activity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.map_screen) {
-            switchToMap();
+        if (id == R.id.map_screen_menu) {
+            Util.launchMapActivity(this);
+            return true;
+        } else if (id == R.id.upgrade_screen_menu) {
+            Util.launchUpgradeScreenActivity(this);
+            return true;
+        } else if (id == R.id.leaderboard_screen_menu) {
+            Util.launchLeaderboardActivity(this);
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    private void switchToMap() {
-        Intent intent = new Intent(this, MapActivity.class);
-        startActivity(intent);
-    }
 }
