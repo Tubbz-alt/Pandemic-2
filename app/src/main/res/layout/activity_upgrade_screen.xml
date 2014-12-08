@@ -35,7 +35,7 @@ android:layout_width="fill_parent">
 
     <TextView
         android:id="@+id/topText"
-        android:text="<insert users stats>"
+        android:text="&lt;insert users stats&gt;"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:textSize="20dip"

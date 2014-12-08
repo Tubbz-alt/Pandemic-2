@@ -17,7 +17,7 @@ public class UpgradeScreen extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upgrade_screen);
-        Button button = (Button) findViewById(R.id.button01);
+        Button button = (Button) findViewById(R.id.button_coughing);
         button.setOnClickListener(new SymptomsOnClickListener());
     }
 
