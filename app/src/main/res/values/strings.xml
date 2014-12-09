@@ -7,5 +7,6 @@
     <string name="leaderboard">Leaderboard</string>
     <string name="title_activity_leaderboard">Leaderboard</string>
     <string name="title_activity_map">MapActivity</string>
+    <string name="title_activity_upgrade_screen">upgrade_screen</string>
 
 </resources>

@@ -1,47 +1,24 @@
-package com.hci.pandemic.pandemic;
+package com.hci.pandemic.pandemic.upgrade_screen;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 
-public class MainActivity extends Activity {
+import com.hci.pandemic.pandemic.Util;
+import com.hci.pandemic.pandemic.R;
+
+
+public class UpgradeScreen extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        // button that launches the upgrade screen activity
-        final Button to_upgrade_screen = (Button) findViewById(R.id.upgrade_screen);
-        to_upgrade_screen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Util.launchUpgradeScreenActivity(getApplicationContext());
-            }
-        });
-
-        //button that launches the leaderboard activity
-        final Button to_leaderboard = (Button) findViewById(R.id.leaderboard);
-        to_leaderboard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Util.launchLeaderboardActivity(getApplicationContext());
-            }
-        });
-
-        // button that launches the map activity
-        final Button to_map_screen = (Button) findViewById(R.id.map_screen_activity);
-        to_map_screen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Util.launchMapActivity(getApplicationContext());
-            }
-        });
+        setContentView(R.layout.activity_upgrade_screen);
+        Button button = (Button) findViewById(R.id.button_coughing);
+        button.setOnClickListener(new SymptomsOnClickListener());
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -71,5 +48,6 @@ public class MainActivity extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
+
 
 }
