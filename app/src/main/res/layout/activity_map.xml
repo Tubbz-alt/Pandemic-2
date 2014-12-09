@@ -6,6 +6,101 @@
         android:id="@+id/mapView"
         android:name="com.google.android.gms.maps.MapFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_marginTop="64dp"/>
+
+    <RelativeLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_alignParentTop="true"
+        android:background="#580000" >
+
+        <View android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:background="@drawable/circle"/>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:indeterminate="false"
+            android:progressDrawable="@drawable/circular_progress_bar"
+            android:background="@drawable/circle_shape"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:max="100"
+            android:progress="10" />
+
+        <TextView
+            android:id="@+id/descripText"
+            android:text="Disease Name\nStats here?"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="24dp"
+            android:textColor="#FFFFFF"
+            android:layout_marginLeft="72dp"
+            android:layout_marginTop="2dp"
+            android:gravity="left"/>
+
+        <TextView
+            android:id="@+id/lvlText"
+            android:text="1"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:textSize="44dp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:gravity="center"/>
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/buttons"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="64dp">
+
+        <ImageButton
+            android:id="@+id/btn_upgrade"
+            android:src="@drawable/upgrades"
+            android:background="@null"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:scaleType="fitXY"
+            android:onClick="changeToUpgrade"/>
+
+        <ImageButton
+            android:id="@+id/btn_leaderboard"
+            android:src="@drawable/leaderboard"
+            android:background="@null"
+            android:scaleType="fitXY"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="84dp"
+            android:onClick="changeToLeaderboard"/>
+
+    </FrameLayout>
+
+    <RelativeLayout
+        android:id="@+id/footer"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:layout_alignParentBottom="true"
+        android:background="#000"
+        android:gravity="center" >
+
+        <TextView
+            android:id="@+id/topText"
+            android:text="Update text here ..."
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="18dp"
+            android:textColor="#FFFFFF"
+            android:layout_marginLeft="8dp"
+            android:gravity="left|center"/>
+    </RelativeLayout>
+
 
 </RelativeLayout>
