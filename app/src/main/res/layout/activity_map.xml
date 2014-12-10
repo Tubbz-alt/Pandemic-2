@@ -33,7 +33,7 @@
 
         <TextView
             android:id="@+id/descripText"
-            android:text="Disease Name\nStats here?"
+            android:text="Disease Name\n#Infected: 0"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textSize="24dp"
@@ -44,11 +44,23 @@
 
         <TextView
             android:id="@+id/lvlText"
+            android:text="LVL"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:textSize="12dp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="8dp"
+            android:gravity="top|center"/>
+
+        <TextView
+            android:id="@+id/lvlText2"
             android:text="1"
             android:layout_width="64dp"
             android:layout_height="64dp"
-            android:textSize="44dp"
+            android:textSize="36dp"
             android:textStyle="bold"
+            android:layout_marginTop="8dp"
             android:textColor="#FFFFFF"
             android:gravity="center"/>
     </RelativeLayout>
@@ -92,7 +104,7 @@
         android:gravity="center" >
 
         <TextView
-            android:id="@+id/topText"
+            android:id="@+id/footerText"
             android:text="Update text here ..."
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -102,5 +114,183 @@
             android:gravity="left|center"/>
     </RelativeLayout>
 
+    <RelativeLayout
+        android:layout_centerInParent="true"
+        android:id="@+id/cover"
+        android:clickable="true"
+        android:visibility="gone"
+        android:alpha=".5"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="128dp"
+        android:background="#DDD"
+        android:gravity="center" >
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_centerInParent="true"
+        android:id="@+id/selfWindow"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:background="#CCC"
+        android:visibility="gone"
+        android:gravity="center" >
+
+        <TextView
+            android:id="@+id/selfText"
+            android:text="Disease Stats"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="24dp"
+            android:textColor="#000"
+            android:textStyle="bold"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center|top"/>
+
+        <TextView
+            android:id="@+id/selfText2"
+            android:text="Radius: 10m\nInfectiousness: 5\nDeadliness: 3\nResistance: 3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="18dp"
+            android:textColor="#000"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="48dp"
+            android:gravity="left"/>
+
+        <Button
+            android:layout_height="50dp"
+            android:layout_width="fill_parent"
+            android:layout_marginLeft="40dip"
+            android:layout_marginRight="40dip"
+            android:layout_marginTop="150dp"
+            android:onClick="closeSelfWindow"
+            android:text="Ok"/>
+
+        <TextView
+            android:id="@+id/selfText3"
+            android:text="Hint: You can upgrade your stats by leveling up and buying new upgrades in the upgrade menu!"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="18dp"
+            android:textColor="#000"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:layout_marginTop="220dp"
+            android:gravity="left"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_centerInParent="true"
+        android:id="@+id/enemyWindow"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:background="#CCC"
+        android:visibility="gone"
+        android:gravity="center" >
+
+        <TextView
+            android:id="@+id/enemyText"
+            android:text="Enemy Player"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="24dp"
+            android:textColor="#000"
+            android:textStyle="bold"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center|top"/>
+
+        <TextView
+            android:id="@+id/enemyText2"
+            android:text="Radius: ?\nInfectiousness: ?\nDeadliness: ?\nResistance: ?\nDiseases Carrying: ?"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="18dp"
+            android:textColor="#000"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="48dp"
+            android:gravity="left"/>
+
+        <Button
+            android:layout_height="50dp"
+            android:layout_width="fill_parent"
+            android:layout_marginLeft="40dip"
+            android:layout_marginRight="40dip"
+            android:layout_marginTop="170dp"
+            android:onClick="closeEnemyWindow"
+            android:text="Ok"/>
+
+        <TextView
+            android:id="@+id/enemyText3"
+            android:text="Hint: You cannot see other players' stats without a special power-up!"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="18dp"
+            android:textColor="#000"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:layout_marginTop="240dp"
+            android:gravity="left"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_centerInParent="true"
+        android:id="@+id/bonusWindow"
+        android:layout_width="300dp"
+        android:layout_height="250dp"
+        android:background="#CCC"
+        android:visibility="gone"
+        android:gravity="center" >
+
+        <TextView
+            android:id="@+id/bonusText"
+            android:text="Bonus Powerup"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="24dp"
+            android:textColor="#000"
+            android:textStyle="bold"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center|top"/>
+
+        <TextView
+            android:id="@+id/bonusText2"
+            android:text="Temporarily allows you you to see another player's stats!\nLasts for 2 hours."
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="18dp"
+            android:textColor="#000"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="48dp"
+            android:gravity="left"/>
+
+        <Button
+            android:layout_height="50dp"
+            android:layout_width="fill_parent"
+            android:layout_marginLeft="40dip"
+            android:layout_marginRight="40dip"
+            android:layout_marginTop="120dp"
+            android:onClick="closeBonusWindow"
+            android:text="Ok"/>
+
+        <TextView
+            android:id="@+id/bonusText3"
+            android:text="Hint: Walk near power-ups to obtain them!"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="18dp"
+            android:textColor="#000"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:layout_marginTop="180dp"
+            android:gravity="left"/>
+
+    </RelativeLayout>
 
 </RelativeLayout>

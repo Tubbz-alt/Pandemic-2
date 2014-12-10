@@ -17,6 +17,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -130,23 +132,84 @@ public class MapActivity extends Activity {
 
                 @Override
                 public boolean onMarkerClick(Marker marker) {
-                    if (marker.equals(selfMarker))
-                    {
-                        Log.d("mapApp", "self clicked");
-                    }
-                    else if (marker.equals(enemyMarker))
-                    {
-                        Log.d("mapApp", "enemy clicked");
-                    }
-                    else if (marker.equals(bonusMarker))
-                    {
-                        Log.d("mapApp", "bonus clicked");
+                    if (marker.equals(selfMarker)) {
+                        runOnUiThread(new Runnable()
+                        {
+                            public void run()
+                            {
+                                RelativeLayout cover = (RelativeLayout) findViewById(R.id.cover);
+                                cover.setVisibility(View.VISIBLE);
+                                RelativeLayout selfWindow = (RelativeLayout) findViewById(R.id.selfWindow);
+                                selfWindow.setVisibility(View.VISIBLE);
+                            }
+                        });
+                    } else if (marker.equals(enemyMarker)) {
+                        runOnUiThread(new Runnable()
+                        {
+                            public void run()
+                            {
+                                RelativeLayout cover = (RelativeLayout) findViewById(R.id.cover);
+                                cover.setVisibility(View.VISIBLE);
+                                RelativeLayout selfWindow = (RelativeLayout) findViewById(R.id.enemyWindow);
+                                selfWindow.setVisibility(View.VISIBLE);
+                            }
+                        });
+                    } else if (marker.equals(bonusMarker)) {
+                        runOnUiThread(new Runnable()
+                        {
+                            public void run()
+                            {
+                                RelativeLayout cover = (RelativeLayout) findViewById(R.id.cover);
+                                cover.setVisibility(View.VISIBLE);
+                                RelativeLayout selfWindow = (RelativeLayout) findViewById(R.id.bonusWindow);
+                                selfWindow.setVisibility(View.VISIBLE);
+                            }
+                        });
                     }
                     return true;
                 }
 
             });
         }
+    }
+
+    public void closeSelfWindow(View view) {
+        runOnUiThread(new Runnable()
+        {
+            public void run()
+            {
+                RelativeLayout cover = (RelativeLayout) findViewById(R.id.cover);
+                cover.setVisibility(View.GONE);
+                RelativeLayout selfWindow = (RelativeLayout) findViewById(R.id.selfWindow);
+                selfWindow.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    public void closeEnemyWindow(View view) {
+        runOnUiThread(new Runnable()
+        {
+            public void run()
+            {
+                RelativeLayout cover = (RelativeLayout) findViewById(R.id.cover);
+                cover.setVisibility(View.GONE);
+                RelativeLayout selfWindow = (RelativeLayout) findViewById(R.id.enemyWindow);
+                selfWindow.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    public void closeBonusWindow(View view) {
+        runOnUiThread(new Runnable()
+        {
+            public void run()
+            {
+                RelativeLayout cover = (RelativeLayout) findViewById(R.id.cover);
+                cover.setVisibility(View.GONE);
+                RelativeLayout selfWindow = (RelativeLayout) findViewById(R.id.bonusWindow);
+                selfWindow.setVisibility(View.GONE);
+            }
+        });
     }
 
     private LatLng getCurrentLocation() {
@@ -178,7 +241,7 @@ public class MapActivity extends Activity {
 
         // Create a LatLng object for the current location
         LatLng latLng = new LatLng(latitude, longitude);
-        Log.d("mapApp", latitude + " " + longitude);
+       // Log.d("mapApp", latitude + " " + longitude);
         return latLng;
     }
 
@@ -198,11 +261,29 @@ public class MapActivity extends Activity {
 
     public void initThreads() {
 
+        //thread for updating position
         new Thread(new Runnable() {
             public void run() {
-                Log.d("mapApp", "Thread running");
-                LatLng temp = getCurrentLocation();
-                //selfMarker.setPosition(temp);
+                while (true) {
+                    try {
+                        Thread.sleep(1000/30);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    runOnUiThread(new Runnable()
+                    {
+                        public void run()
+                        {
+                            LatLng temp = getCurrentLocation();
+                            selfMarker.setPosition(temp);
+                            //googleMap.moveCamera(CameraUpdateFactory.newLatLng(getCurrentLocation()));
+                            if (insideRadius(enemyMarker.getPosition().latitude, enemyMarker.getPosition().longitude, 10.0)) {
+                                TextView footer = (TextView) findViewById(R.id.footerText);
+                                footer.setText("You are infecting someone!");
+                            }
+                        }
+                    });
+                }
             }
         }).start();
 
@@ -213,7 +294,7 @@ public class MapActivity extends Activity {
                 while(true)
                 {
                     try {
-                        Thread.sleep(33);
+                        Thread.sleep(1000/30);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -223,6 +304,8 @@ public class MapActivity extends Activity {
                 }
             }
         }).start();
+
+        Log.d("mapApp", "Thread running");
     }
 
     public void changeToUpgrade() {
