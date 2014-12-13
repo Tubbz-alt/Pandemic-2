@@ -33,7 +33,7 @@
         </activity>
 
         <activity
-            android:name=".upgrade_screen.UpgradeScreen"
+            android:name=".UpgradeScreen"
             android:label="@string/title_activity_upgrade_screen" >
         </activity>
 

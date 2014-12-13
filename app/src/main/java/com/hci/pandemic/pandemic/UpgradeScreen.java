@@ -1,13 +1,11 @@
-package com.hci.pandemic.pandemic.upgrade_screen;
+package com.hci.pandemic.pandemic;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
-
-import com.hci.pandemic.pandemic.Util;
-import com.hci.pandemic.pandemic.R;
 
 
 public class UpgradeScreen extends Activity {
@@ -49,5 +47,12 @@ public class UpgradeScreen extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    private class SymptomsOnClickListener implements View.OnClickListener{
+
+        @Override
+        public void onClick(View v) {
+
+        }
+    }
 
 }
