@@ -8,5 +8,7 @@
     <string name="title_activity_leaderboard">Leaderboard</string>
     <string name="title_activity_map">MapActivity</string>
     <string name="title_activity_upgrade_screen">upgrade_screen</string>
+    <string name="click_to_close">Touch anywhere on popup to close.</string>
+    <string name="rank">Rank</string>
 
 </resources>

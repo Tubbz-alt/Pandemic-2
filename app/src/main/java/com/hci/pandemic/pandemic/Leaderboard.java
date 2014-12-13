@@ -1,17 +1,57 @@
 package com.hci.pandemic.pandemic;
 
-import android.app.Activity;
+import android.app.ListActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 
 
-public class Leaderboard extends Activity {
+public class Leaderboard extends ListActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_leaderboard);
+        setContentView(R.layout.leaderboard_combo);
+
+        final String[] values = new String[]{"Player One", "Player Two",
+            "Player Three", "Player Four", "Player Five", "Player Six",
+            "Player Seven", "Player Eight", "Player Nine", "Player Ten", "Player Eleven",
+            "Player Twelve", "Player Thirteen", "Player Fourteen"};
+
+        ArrayAdapter<String> adapter = new ListAdapter(this, values);
+        setListAdapter(adapter);
+
+        final TextView tv = (TextView) findViewById(R.id.leaderboard_popup);
+
+        ListView lv = getListView();
+
+        LayoutInflater inflater = getLayoutInflater();
+        View header = inflater.inflate(R.layout.header, lv, false);
+        lv.addHeaderView(header, null, false);
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.i("Info", String.valueOf(position));
+                tv.setText("THIS IS A MOTHERFUCKING DESCRIPTION");
+                tv.setVisibility(View.VISIBLE);
+            }
+        });
+
+        tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tv.setVisibility(View.INVISIBLE);
+            }
+        });
+
     }
 
 
