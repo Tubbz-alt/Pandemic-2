@@ -25,18 +25,19 @@ public class Leaderboard extends ListActivity {
         setContentView(R.layout.leaderboard_combo);
 
         DBHelper dbHelper = new DBHelper(this);
-        if (dbHelper.getUserCount() == 0){
-            dbHelper.addUser("Andrew Parrish", "Senioritis");
-            dbHelper.addUser("Izzy Coronado", "Ebola");
-            dbHelper.addUser("Naveed N", "Swine Flu");
-            dbHelper.addUser("Steven Ma", "SARS");
-            dbHelper.addUser("Jon Frolich", "Newbabysyndrome");
-        }
+        dbHelper.addUser("Andrew Parrish", "Senioritis");
+        dbHelper.addUser("Izzy Coronado", "Ebola");
+        dbHelper.addUser("Naveed N", "Swine Flu");
+        dbHelper.addUser("Steven Ma", "SARS");
+        dbHelper.addUser("Jon Frolich", "Newbabysyndrome");
+        dbHelper.addUser("Mike Krzyzewski", "Vaginitis");
+        dbHelper.addUser("Tay Swift", "Feelingtwentytwo");
 
         List<User> users = dbHelper.getAllUsers();
         Collections.sort(users);
 
-        final String[] values = new String[]{"Player One", "Player Two", "", "", ""};
+        final String[] values = new String[]{"Player One", "Player Two", "", "", "", "",
+            "",};
                 /*,
             "Player Three", "Player Four", "Player Five", "Player Six",
             "Player Seven", "Player Eight", "Player Nine", "Player Ten", "Player Eleven",

@@ -53,7 +53,23 @@ public class DBHelper extends SQLiteOpenHelper {
         return count;
     }
 
+    public boolean userExists(String name){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+
+        cursor = db.query(TABLE_USERS, new String[] {COLUMN_ID, COLUMN_NAME, COLUMN_DISEASE,
+            COLUMN_SCORE}, COLUMN_NAME + "=?", new String[] {name}, null, null, null, null);
+        if (cursor.moveToFirst()){
+            return true;
+        }
+        return false;
+    }
+
     public void addUser(String name, String disease){
+        if (userExists(name)){
+            return;
+        }
+
         Random random = new Random();
         int score = random.nextInt(100 - 10) + 10;
 
