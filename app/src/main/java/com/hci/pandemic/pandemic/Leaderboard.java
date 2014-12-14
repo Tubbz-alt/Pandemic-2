@@ -12,6 +12,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 
 public class Leaderboard extends ListActivity {
 
@@ -20,12 +24,26 @@ public class Leaderboard extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.leaderboard_combo);
 
-        final String[] values = new String[]{"Player One", "Player Two",
+        DBHelper dbHelper = new DBHelper(this);
+        dbHelper.addUser("Andrew Parrish", "Senioritis");
+        dbHelper.addUser("Izzy Coronado", "Ebola");
+        dbHelper.addUser("Naveed N", "Swine Flu");
+        dbHelper.addUser("Steven Ma", "SARS");
+        dbHelper.addUser("Jon Frolich", "Newbabysyndrome");
+        dbHelper.addUser("Mike Krzyzewski", "Vaginitis");
+        dbHelper.addUser("Tay Swift", "Feelingtwentytwo");
+
+        List<User> users = dbHelper.getAllUsers();
+        Collections.sort(users);
+
+        final String[] values = new String[]{"Player One", "Player Two", "", "", "", "",
+            "",};
+                /*,
             "Player Three", "Player Four", "Player Five", "Player Six",
             "Player Seven", "Player Eight", "Player Nine", "Player Ten", "Player Eleven",
-            "Player Twelve", "Player Thirteen", "Player Fourteen"};
+            "Player Twelve", "Player Thirteen", "Player Fourteen"};*/
 
-        ArrayAdapter<String> adapter = new ListAdapter(this, values);
+        ArrayAdapter<String> adapter = new ListAdapter(this, values, (ArrayList<User>) users);
         setListAdapter(adapter);
 
         final TextView tv = (TextView) findViewById(R.id.leaderboard_popup);

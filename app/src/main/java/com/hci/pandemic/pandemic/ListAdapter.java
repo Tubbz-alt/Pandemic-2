@@ -10,17 +10,21 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+
 /**
  * Created by andrewparrish on 12/2/14.
  */
 public class ListAdapter extends ArrayAdapter<String>{
     private final Context context;
     private final String[] values;
+    private final ArrayList<User> users;
 
-    public ListAdapter(Context context, String[] values) {
+    public ListAdapter(Context context, String[] values, ArrayList<User> users) {
         super(context, R.layout.activity_leaderboard, values);
         this.context = context;
         this.values = values;
+        this.users = users;
     }
 
     @Override
@@ -35,8 +39,8 @@ public class ListAdapter extends ArrayAdapter<String>{
 
         int counter = position + 1;
         number.setText("#"+counter);
-        firstRow.setText(values[position]);
-        secondRow.setText("Test");
+        firstRow.setText(users.get(position).DiseaseName());
+        secondRow.setText("Score: " + users.get(position).Score());
 
         return rowView;
     }
