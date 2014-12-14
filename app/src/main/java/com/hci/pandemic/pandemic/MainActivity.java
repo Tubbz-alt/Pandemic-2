@@ -1,6 +1,7 @@
 package com.hci.pandemic.pandemic;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,7 +20,8 @@ public class MainActivity extends Activity {
         to_upgrade_screen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Util.launchUpgradeScreenActivity(getApplicationContext());
+                Intent intent = new Intent(getApplicationContext(), UpgradeScreen.class);
+                startActivity(intent);
             }
         });
 
@@ -28,7 +30,8 @@ public class MainActivity extends Activity {
         to_leaderboard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Util.launchLeaderboardActivity(getApplicationContext());
+                Intent intent = new Intent(getApplicationContext(), Leaderboard.class);
+                startActivity(intent);
             }
         });
 
@@ -37,7 +40,8 @@ public class MainActivity extends Activity {
         to_map_screen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Util.launchMapActivity(getApplicationContext());
+                Intent intent = new Intent(getApplicationContext(), MapActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -59,13 +63,16 @@ public class MainActivity extends Activity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.map_screen_menu) {
-            Util.launchMapActivity(this);
+            Intent intent = new Intent(this, MapActivity.class);
+            startActivity(intent);
             return true;
         } else if (id == R.id.upgrade_screen_menu) {
-            Util.launchUpgradeScreenActivity(this);
+            Intent intent = new Intent(this, UpgradeScreen.class);
+            startActivity(intent);
             return true;
         } else if (id == R.id.leaderboard_screen_menu) {
-            Util.launchLeaderboardActivity(this);
+            Intent intent = new Intent(this, Leaderboard.class);
+            startActivity(intent);
             return true;
         }
 

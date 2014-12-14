@@ -2,6 +2,7 @@ package com.hci.pandemic.pandemic;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.location.Criteria;
 import android.location.Location;
@@ -13,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -25,10 +27,11 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 
-public class MapActivity extends Activity {
+public class MapActivity extends Activity{
 
     GoogleMap googleMap;
     Marker selfMarker, enemyMarker, bonusMarker;
+    ImageButton upgradeScreen,leaderboardScreen;
     int progress;
 
     @Override
@@ -37,7 +40,32 @@ public class MapActivity extends Activity {
         setContentView(R.layout.activity_map);
         createMapView();
         createMarkers();
+        createMapButtons();
         initThreads();
+    }
+
+    private void createMapButtons() {
+        upgradeScreen = (ImageButton) findViewById(R.id.btn_upgrade);
+        leaderboardScreen = (ImageButton) findViewById(R.id.btn_leaderboard);
+
+        upgradeScreen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), UpgradeScreen.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
+
+        leaderboardScreen.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Leaderboard.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
     }
 
 
@@ -57,13 +85,16 @@ public class MapActivity extends Activity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.map_screen_menu) {
-            Util.launchMapActivity(this);
             return true;
         } else if (id == R.id.upgrade_screen_menu) {
-            Util.launchUpgradeScreenActivity(this);
+            Intent intent = new Intent(this, UpgradeScreen.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
             return true;
         } else if (id == R.id.leaderboard_screen_menu) {
-            Util.launchLeaderboardActivity(this);
+            Intent intent = new Intent(this, Leaderboard.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
             return true;
         }
 
@@ -231,14 +262,6 @@ public class MapActivity extends Activity {
                 }
             }
         }).start();
-    }
-
-    public void changeToUpgrade() {
-        //TO DO
-    }
-
-    public void changeToLeaderboard() {
-        // TO DO
     }
 
     public void changeProgress(int progress) {

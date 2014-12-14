@@ -1,6 +1,7 @@
 package com.hci.pandemic.pandemic;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,13 +35,16 @@ public class UpgradeScreen extends Activity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.map_screen_menu) {
-            Util.launchMapActivity(this);
+            Intent intent = new Intent(this, MapActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
             return true;
         } else if (id == R.id.upgrade_screen_menu) {
-            Util.launchUpgradeScreenActivity(this);
             return true;
         } else if (id == R.id.leaderboard_screen_menu) {
-            Util.launchLeaderboardActivity(this);
+            Intent intent = new Intent(this, Leaderboard.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
             return true;
         }
 
