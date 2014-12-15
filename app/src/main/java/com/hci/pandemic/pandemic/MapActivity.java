@@ -330,12 +330,13 @@ public class MapActivity extends Activity{
                                     TextView footer2 = (TextView) findViewById(R.id.footerText);
                                     footer2.setText("You are infecting someone!");
                                 }
-                                else if (insideRadius(bonusMarker.getPosition().latitude, bonusMarker.getPosition().longitude, 15.0)) {
+                                else if (insideRadius(bonusMarker.getPosition().latitude, bonusMarker.getPosition().longitude, 10.0)) {
                                     RelativeLayout footer = (RelativeLayout) findViewById(R.id.footer);
                                     footer.setVisibility(View.VISIBLE);
                                     TextView footer2 = (TextView) findViewById(R.id.footerText);
                                     footer2.setText("You have picked up a power-up!");
                                     changeProgress(progress += 25);
+                                    bonusMarker.remove();
                                 }
                                 else
                                 {
