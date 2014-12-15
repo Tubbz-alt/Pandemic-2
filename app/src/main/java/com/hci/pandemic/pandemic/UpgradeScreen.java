@@ -12,6 +12,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class UpgradeScreen extends Activity {
@@ -46,6 +48,15 @@ public class UpgradeScreen extends Activity {
         has_blind = mPrefs.getBoolean("blind_bool", false);
         has_seizure = mPrefs.getBoolean("seizure_bool", false);
         has_rash = mPrefs.getBoolean("rash_bool", false);
+
+        // get all the symptoms in the DB
+        DBHelper dbHelper = new DBHelper(this);
+
+        prepopulateSymptomTable(dbHelper);
+        final List<Symptom> symptomList = dbHelper.getAllSymptoms();
+
+
+        Log.i("APP","symptom for coughing is:" + symptomList.toArray()[0].toString());
 
         // display the page
         setContentView(R.layout.activity_upgrade_screen);
@@ -154,4 +165,20 @@ public class UpgradeScreen extends Activity {
         }
     }
 
+
+    public void prepopulateSymptomTable(DBHelper dbHelper){
+
+        dbHelper.addSymptom(new Symptom(1,"coughing", "A cough is a forceful release of air from the lungs that can be heard.", 1, 2, 1, 3));
+        dbHelper.addSymptom(new Symptom(2,"sneezing", "A sneeze is a sudden involuntary expulsion of air from the nose and mouth due to irritation of one's nostrils.", 1, 2, 1, 4));
+        dbHelper.addSymptom(new Symptom(3,"sweating", "Sweating is moisture exuded through the pores of the skin, typically in profuse quantities as a reaction to heat, physical exertion, fever, or fear.", 1,1,3, 3));
+        dbHelper.addSymptom(new Symptom(4, "chills", "Chills are a sensation of coldness, often accompanied by shivering and pallor of the skin.", 2, 0, 3, 7));
+        dbHelper.addSymptom(new Symptom(5, "fatigue", "Fatigue: extreme tiredness, typically resulting from mental or physical exertion or illness.", 2, 0, 4, 5));
+        dbHelper.addSymptom(new Symptom(6, "nausea", "Nausea is a feeling of sickness with an inclination to vomit.", 2, 1, 3, 8));
+        dbHelper.addSymptom(new Symptom(7, "vomit", "To vomit is to eject matter from the stomach through the mouth.", 3, 3, 2, 11));
+        dbHelper.addSymptom(new Symptom(8, "diarrhea", "Diarrhea is a condition in which feces are discharged from the bowels frequently and in a liquid form.",3,4,4, 13));
+        dbHelper.addSymptom(new Symptom(9, "fever", "Fever is an abnormally high body temperature, usually accompanied by shivering, headache, and in severe instances, delirium.", 3, 2,6, 10));
+        dbHelper.addSymptom(new Symptom(10, "blindness", "Blindness: unable to see; lacking the sense of sight; sightless", 4, 0, 10, 15));
+        dbHelper.addSymptom(new Symptom(11, "seizure", "A Seizure is uncontrolled electrical activity in the brain, which may produce a physical convulsion, minor physical signs, thought disturbances, or a combination of symptoms.", 4, 0, 8, 18));
+        dbHelper.addSymptom(new Symptom(12, "rash", "Rash: an eruption on the body typically with little or no elevation above the surface.", 4, 12, 6, 13));
+    }
 }

@@ -31,10 +31,12 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_SYMPTOM_LEVEL = "level";
     public static final String COLUMN_SYMPTOM_CONTAGIOUSNESS = "contagiousness";
     public static final String COLUMN_SYMPTOM_LETHALITY = "lethality";
+    public static final String COLUMN_SYMPTOM_EVPOINTS = "ev_points";
 
 
     private static final String DATABASE_NAME = "pandemic.db";
-    private static final int DATABASE_VERSION = 1;
+    private static  int DATABASE_VERSION = 1;
+
 
     //Database creation SQL statement
     private static final String USER_TABLE_CREATE = "create table " +
@@ -46,11 +48,15 @@ public class DBHelper extends SQLiteOpenHelper {
             TABLE_SYMPTOMS + "(" + COLUMN_ID + " integer primary key autoincrement, " +
             COLUMN_SYMPTOM_NAME + " text not null, " + COLUMN_SYMPTOM_DESCRIPTION +
             " text not null, " + COLUMN_SYMPTOM_LEVEL + " integer, " + COLUMN_SYMPTOM_CONTAGIOUSNESS
-            + " integer, " + COLUMN_SYMPTOM_LETHALITY + " integer" + ");";
+            + " integer, " + COLUMN_SYMPTOM_LETHALITY + " integer, "+ COLUMN_SYMPTOM_EVPOINTS + " integer" + ");";
 
 
     public DBHelper(Context context){
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        super(context, DATABASE_NAME, null, DATABASE_VERSION++);
+    }
+
+    public DBHelper(Context context, int db_version) {
+        super(context, DATABASE_NAME, null, db_version);
     }
 
     @Override
@@ -60,10 +66,85 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     @Override
+    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion){
+        // do nothing; (used to throw a sql exception) @hack please don't hate me
+        return;
+    }
+    @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_SYMPTOMS);
+
         onCreate(db);
     }
+
+    public void addSymptom(Symptom symptom){
+
+        if(SymptomExists(symptom.getName())){
+            return;
+        }
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(COLUMN_ID, symptom.get_id());
+        values.put(COLUMN_SYMPTOM_NAME, symptom.getName());
+        values.put(COLUMN_SYMPTOM_DESCRIPTION, symptom.getDescription());
+        values.put(COLUMN_SYMPTOM_LEVEL, symptom.getLevel());
+        values.put(COLUMN_SYMPTOM_CONTAGIOUSNESS, symptom.getContagiousness());
+        values.put(COLUMN_SYMPTOM_LETHALITY, symptom.getLethality());
+        values.put(COLUMN_SYMPTOM_EVPOINTS, symptom.getPoints_to_unlock());
+
+        db.insert(TABLE_SYMPTOMS, null, values);
+
+    }
+
+    public List<Symptom> getAllSymptoms(){
+        List<Symptom> symptoms = new ArrayList<Symptom>();
+
+        String query = "SELECT * FROM "+ TABLE_SYMPTOMS;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()){
+            do{
+                Symptom symptom = new Symptom();
+
+                symptom.set_id(cursor.getInt(0));
+                symptom.setName(cursor.getString(1));
+                symptom.setDescription(cursor.getString(2));
+                symptom.setLevel(cursor.getInt(3));
+                symptom.setContagiousness(cursor.getInt(4));
+                symptom.setLethality(cursor.getInt(5));
+                symptom.setPoints_to_unlock(cursor.getInt(6));
+
+                symptoms.add(symptom);
+            }while(cursor.moveToNext());
+        }
+
+        return symptoms;
+    }
+
+
+    public long getSymptomCount(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        long count =  DatabaseUtils.queryNumEntries(db, TABLE_SYMPTOMS);
+        return count;
+    }
+
+    public boolean SymptomExists(String name){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = null;
+
+        //cursor = db.rawQuery("SELECT * FROM " + TABLE_SYMPTOMS + " WHERE " + COLUMN_SYMPTOM_NAME + "=?", new String[] {name});
+        cursor = db.query(TABLE_SYMPTOMS, null, COLUMN_SYMPTOM_NAME + "=?",new String[] {name}, null,null,null,null );
+
+        if (cursor.moveToFirst()){
+            return true;
+        }
+        return false;
+    }
+
+
 
     public long getUserCount(){
         SQLiteDatabase db = this.getWritableDatabase();

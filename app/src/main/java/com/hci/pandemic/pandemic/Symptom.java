@@ -11,6 +11,7 @@ public class Symptom {
     String description;
     int contagiousness;
     int lethality;
+    int points_to_unlock;
 
     // java bean compatibility
     public Symptom() {
@@ -20,13 +21,14 @@ public class Symptom {
         this._id = _id;
     }
 
-    public Symptom(int _id, String name, int level, String description, int contagiousness, int lethality) {
+    public Symptom(int _id, String name, String description,  int level, int contagiousness, int lethality, int points_to_unlock) {
         this._id = _id;
         this.name = name;
         this.level = level;
         this.description = description;
         this.contagiousness = contagiousness;
         this.lethality = lethality;
+        this.points_to_unlock = points_to_unlock;
     }
 
     public String getName() {
@@ -77,4 +79,24 @@ public class Symptom {
         this._id = _id;
     }
 
+    public int getPoints_to_unlock() {
+        return points_to_unlock;
+    }
+
+    public void setPoints_to_unlock(int points_to_unlock) {
+        this.points_to_unlock = points_to_unlock;
+    }
+
+    @Override
+    public String toString() {
+        return "Symptom{" +
+                "_id=" + _id +
+                ", name='" + name + '\'' +
+                ", level=" + level +
+                ", description='" + description + '\'' +
+                ", contagiousness=" + contagiousness +
+                ", lethality=" + lethality +
+                ", points_to_unlock=" + points_to_unlock +
+                '}';
+    }
 }
