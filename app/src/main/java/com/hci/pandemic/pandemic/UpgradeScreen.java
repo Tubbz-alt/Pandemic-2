@@ -154,7 +154,7 @@ public class UpgradeScreen extends Activity implements SymptomDialogFragment.Sym
 
     @Override
     public void onDialogPositiveClick(DialogFragment dialog, int symptomID) {
-        //Log.i("APP", "symptom clicked is " + getSymptomFromListById(symptomID).toString());
+
     }
 
     @Override

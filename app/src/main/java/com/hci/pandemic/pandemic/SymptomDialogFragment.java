@@ -30,6 +30,7 @@ public class SymptomDialogFragment extends DialogFragment {
         // unpack the bundle
         Bundle bundle = getArguments();
 
+        int id = bundle.getInt("id");
         String name = bundle.getString("name");
         String description = bundle.getString("description");
         int level = bundle.getInt("level");
@@ -52,6 +53,7 @@ public class SymptomDialogFragment extends DialogFragment {
                            description + "\n\n" +
                            line_contagious + "\n\n" +
                            line_lethality + "\n\n" +
+                           line_unlock + "\n\n" +
                            line_confirm)
 
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
