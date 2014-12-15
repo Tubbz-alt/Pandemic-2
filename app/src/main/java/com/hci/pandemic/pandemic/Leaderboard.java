@@ -33,12 +33,15 @@ public class Leaderboard extends ListActivity {
         dbHelper.addUser("Jon Frolich", "Newbabysyndrome");
         dbHelper.addUser("Mike Krzyzewski", "Vaginitis");
         dbHelper.addUser("Tay Swift", "Feelingtwentytwo");
+        dbHelper.addUser("Michael Scott", "Scottstots");
+        dbHelper.addUser("President Obama", "POTUSitis");
+        dbHelper.addUser("Wallace Loh", "Eloha");
 
-        List<User> users = dbHelper.getAllUsers();
+        final List<User> users = dbHelper.getAllUsers();
         Collections.sort(users);
 
         final String[] values = new String[]{"Player One", "Player Two", "", "", "", "",
-            "",};
+            "", "", "", ""};
                 /*,
             "Player Three", "Player Four", "Player Five", "Player Six",
             "Player Seven", "Player Eight", "Player Nine", "Player Ten", "Player Eleven",
@@ -48,6 +51,7 @@ public class Leaderboard extends ListActivity {
         setListAdapter(adapter);
 
         final TextView tv = (TextView) findViewById(R.id.leaderboard_popup);
+        final TextView instruction = (TextView) findViewById(R.id.popupinstruction);
 
         //ListView lv = getListView();
 
@@ -63,8 +67,10 @@ public class Leaderboard extends ListActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.i("Info", String.valueOf(position));
-                tv.setText("THIS IS A MOTHERFUCKING DESCRIPTION");
+                tv.setText("Username: "+users.get(position).Name() + "\n\n" +
+                    "This is where in a full game additional information could be shown about the user");
                 tv.setVisibility(View.VISIBLE);
+                instruction.setVisibility(View.VISIBLE);
             }
         });
 
@@ -72,6 +78,7 @@ public class Leaderboard extends ListActivity {
             @Override
             public void onClick(View v) {
                 tv.setVisibility(View.INVISIBLE);
+                instruction.setVisibility(View.INVISIBLE);
             }
         });
 
