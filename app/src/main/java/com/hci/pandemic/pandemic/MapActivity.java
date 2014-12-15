@@ -16,6 +16,9 @@ import android.view.ViewGroup;
 import android.os.Build;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -33,6 +36,8 @@ public class MapActivity extends Activity{
     Marker selfMarker, enemyMarker, bonusMarker;
     ImageButton upgradeScreen,leaderboardScreen;
     int progress;
+    Circle circle;
+    LatLng prev;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +116,8 @@ public class MapActivity extends Activity{
                 googleMap = ((MapFragment) getFragmentManager().findFragmentById(
                         R.id.mapView)).getMap();
 
+                prev = new LatLng(0.0,0.0);
+
                 /**
                  * If the map is still null after attempted initialisation,
                  * show an error to the user
@@ -159,7 +166,7 @@ public class MapActivity extends Activity{
                     .title("Bonus").icon(BitmapDescriptorFactory.fromResource(R.drawable.bonus)));
 
             //Radius
-            final Circle circle = googleMap.addCircle(new CircleOptions().center(new LatLng(latitude, longitude))
+            circle = googleMap.addCircle(new CircleOptions().center(new LatLng(latitude, longitude))
                     .strokeColor(Color.BLACK).radius(15));
             circle.setFillColor(Color.argb(150, 224, 255, 255));
             circle.setStrokeWidth(2);
@@ -169,23 +176,84 @@ public class MapActivity extends Activity{
 
                 @Override
                 public boolean onMarkerClick(Marker marker) {
-                    if (marker.equals(selfMarker))
-                    {
-                        Log.d("mapApp", "self clicked");
-                    }
-                    else if (marker.equals(enemyMarker))
-                    {
-                        Log.d("mapApp", "enemy clicked");
-                    }
-                    else if (marker.equals(bonusMarker))
-                    {
-                        Log.d("mapApp", "bonus clicked");
+                    if (marker.equals(selfMarker)) {
+                        runOnUiThread(new Runnable()
+                        {
+                            public void run()
+                            {
+                                RelativeLayout cover = (RelativeLayout) findViewById(R.id.cover);
+                                cover.setVisibility(View.VISIBLE);
+                                RelativeLayout selfWindow = (RelativeLayout) findViewById(R.id.selfWindow);
+                                selfWindow.setVisibility(View.VISIBLE);
+                            }
+                        });
+                    } else if (marker.equals(enemyMarker)) {
+                        runOnUiThread(new Runnable()
+                        {
+                            public void run()
+                            {
+                                RelativeLayout cover = (RelativeLayout) findViewById(R.id.cover);
+                                cover.setVisibility(View.VISIBLE);
+                                RelativeLayout selfWindow = (RelativeLayout) findViewById(R.id.enemyWindow);
+                                selfWindow.setVisibility(View.VISIBLE);
+                            }
+                        });
+                    } else if (marker.equals(bonusMarker)) {
+                        runOnUiThread(new Runnable()
+                        {
+                            public void run()
+                            {
+                                RelativeLayout cover = (RelativeLayout) findViewById(R.id.cover);
+                                cover.setVisibility(View.VISIBLE);
+                                RelativeLayout selfWindow = (RelativeLayout) findViewById(R.id.bonusWindow);
+                                selfWindow.setVisibility(View.VISIBLE);
+                            }
+                        });
                     }
                     return true;
                 }
 
             });
         }
+    }
+
+    public void closeSelfWindow(View view) {
+        runOnUiThread(new Runnable()
+        {
+            public void run()
+            {
+                RelativeLayout cover = (RelativeLayout) findViewById(R.id.cover);
+                cover.setVisibility(View.GONE);
+                RelativeLayout selfWindow = (RelativeLayout) findViewById(R.id.selfWindow);
+                selfWindow.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    public void closeEnemyWindow(View view) {
+        runOnUiThread(new Runnable()
+        {
+            public void run()
+            {
+                RelativeLayout cover = (RelativeLayout) findViewById(R.id.cover);
+                cover.setVisibility(View.GONE);
+                RelativeLayout selfWindow = (RelativeLayout) findViewById(R.id.enemyWindow);
+                selfWindow.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    public void closeBonusWindow(View view) {
+        runOnUiThread(new Runnable()
+        {
+            public void run()
+            {
+                RelativeLayout cover = (RelativeLayout) findViewById(R.id.cover);
+                cover.setVisibility(View.GONE);
+                RelativeLayout selfWindow = (RelativeLayout) findViewById(R.id.bonusWindow);
+                selfWindow.setVisibility(View.GONE);
+            }
+        });
     }
 
     private LatLng getCurrentLocation() {
@@ -217,7 +285,7 @@ public class MapActivity extends Activity{
 
         // Create a LatLng object for the current location
         LatLng latLng = new LatLng(latitude, longitude);
-        Log.d("mapApp", latitude + " " + longitude);
+        // Log.d("mapApp", latitude + " " + longitude);
         return latLng;
     }
 
@@ -237,11 +305,33 @@ public class MapActivity extends Activity{
 
     public void initThreads() {
 
+        //thread for updating position
         new Thread(new Runnable() {
             public void run() {
-                Log.d("mapApp", "Thread running");
-                LatLng temp = getCurrentLocation();
-                //selfMarker.setPosition(temp);
+                while (true) {
+                    try {
+                        Thread.sleep(1000/30);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    runOnUiThread(new Runnable()
+                    {
+                        public void run()
+                        {
+                            LatLng temp = getCurrentLocation();
+                            if (!temp.equals(prev)) {
+                                selfMarker.setPosition(temp);
+                                circle.setCenter(temp);
+                                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(getCurrentLocation(), 19));
+                                if (insideRadius(enemyMarker.getPosition().latitude, enemyMarker.getPosition().longitude, 10.0)) {
+                                    TextView footer = (TextView) findViewById(R.id.footerText);
+                                    footer.setText("You are infecting someone!");
+                                }
+                                prev = temp;
+                            }
+                        }
+                    });
+                }
             }
         }).start();
 
@@ -252,7 +342,7 @@ public class MapActivity extends Activity{
                 while(true)
                 {
                     try {
-                        Thread.sleep(33);
+                        Thread.sleep(1000/30);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -262,6 +352,8 @@ public class MapActivity extends Activity{
                 }
             }
         }).start();
+
+        Log.d("mapApp", "Thread running");
     }
 
     public void changeProgress(int progress) {
