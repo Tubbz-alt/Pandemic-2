@@ -12,6 +12,7 @@ public class Symptom {
     int contagiousness;
     int lethality;
     int points_to_unlock;
+    boolean has_unlocked;
 
     // java bean compatibility
     public Symptom() {
@@ -29,6 +30,7 @@ public class Symptom {
         this.contagiousness = contagiousness;
         this.lethality = lethality;
         this.points_to_unlock = points_to_unlock;
+        this.has_unlocked = false;
     }
 
     public String getName() {
@@ -86,6 +88,13 @@ public class Symptom {
     public void setPoints_to_unlock(int points_to_unlock) {
         this.points_to_unlock = points_to_unlock;
     }
+    public boolean isHas_unlocked() {
+        return has_unlocked;
+    }
+
+    public void setHas_unlocked(boolean has_unlocked) {
+        this.has_unlocked = has_unlocked;
+    }
 
     @Override
     public String toString() {
@@ -97,6 +106,7 @@ public class Symptom {
                 ", contagiousness=" + contagiousness +
                 ", lethality=" + lethality +
                 ", points_to_unlock=" + points_to_unlock +
+                ", has_unlocked=" + has_unlocked +
                 '}';
     }
 }

@@ -33,16 +33,38 @@ android:layout_width="fill_parent">
         android:background="#580000"/>
 
     <TextView
-        android:id="@+id/topText"
+        android:id="@+id/health_stat"
         android:text="&lt;insert users stats&gt;"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="27dp"
         android:textSize="20dip"
-        android:gravity="center"
+        android:gravity="left"
+        android:layout_margin="3dp"
         android:layout_below="@id/leftTopInfoBar" />
+    <TextView
+        android:id="@+id/contagious_stat"
+        android:text="&lt;insert users stats&gt;"
+        android:layout_width="match_parent"
+        android:layout_height="27dp"
+        android:textSize="20dip"
+        android:gravity="left"
+        android:layout_margin="3dp"
+        android:layout_below="@id/health_stat" />
+    <TextView
+        android:id="@+id/lethal_stat"
+        android:text="&lt;insert users stats&gt;"
+        android:layout_width="match_parent"
+        android:layout_height="27dp"
+        android:textSize="20dip"
+        android:gravity="left"
+        android:layout_margin="3dp"
+        android:layout_marginBottom="5dp"
+        android:layout_below="@id/contagious_stat" />
+
+
 
     <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_below="@id/topText"
+        android:layout_below="@id/lethal_stat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/root"
