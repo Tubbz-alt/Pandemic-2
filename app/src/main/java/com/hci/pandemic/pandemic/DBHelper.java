@@ -18,19 +18,36 @@ public class DBHelper extends SQLiteOpenHelper {
     //TODO: Declare table name, column, etc
 
     public static final String TABLE_USERS = "users";
+    public static final String TABLE_SYMPTOMS = "symptoms";
+
     public static final String COLUMN_ID = "_id";
-    public static final String COLUMN_NAME = "user_name";
-    public static final String COLUMN_SCORE = "score";
-    public static final String COLUMN_DISEASE = "disease_name";
+
+    public static final String COLUMN_USER_NAME = "user_name";
+    public static final String COLUMN_USER_SCORE = "score";
+    public static final String COLUMN_USER_DISEASE = "disease_name";
+
+    public static final String COLUMN_SYMPTOM_NAME = "symptom_name";
+    public static final String COLUMN_SYMPTOM_DESCRIPTION = "description";
+    public static final String COLUMN_SYMPTOM_LEVEL = "level";
+    public static final String COLUMN_SYMPTOM_CONTAGIOUSNESS = "contagiousness";
+    public static final String COLUMN_SYMPTOM_LETHALITY = "lethality";
+
 
     private static final String DATABASE_NAME = "pandemic.db";
     private static final int DATABASE_VERSION = 1;
 
     //Database creation SQL statement
-    private static final String DATABASE_CREATE = "create table " +
+    private static final String USER_TABLE_CREATE = "create table " +
             TABLE_USERS + "(" + COLUMN_ID + " integer primary key autoincrement, " +
-            COLUMN_NAME + " text not null, " + COLUMN_SCORE + " integer, " +
-            COLUMN_DISEASE + " text not null" + ");";
+            COLUMN_USER_NAME + " text not null, " + COLUMN_USER_SCORE + " integer, " +
+            COLUMN_USER_DISEASE + " text not null" + ");";
+
+    private static final String SYMPTOM_TABLE_CREATE = "create table " +
+            TABLE_SYMPTOMS + "(" + COLUMN_ID + " integer primary key autoincrement, " +
+            COLUMN_SYMPTOM_NAME + " text not null, " + COLUMN_SYMPTOM_DESCRIPTION +
+            " text not null, " + COLUMN_SYMPTOM_LEVEL + " integer, " + COLUMN_SYMPTOM_CONTAGIOUSNESS
+            + " integer, " + COLUMN_SYMPTOM_LETHALITY + " integer" + ");";
+
 
     public DBHelper(Context context){
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -38,7 +55,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(DATABASE_CREATE);
+        db.execSQL(USER_TABLE_CREATE);
+        db.execSQL(SYMPTOM_TABLE_CREATE);
     }
 
     @Override
@@ -57,8 +75,8 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
 
-        cursor = db.query(TABLE_USERS, new String[] {COLUMN_ID, COLUMN_NAME, COLUMN_DISEASE,
-            COLUMN_SCORE}, COLUMN_NAME + "=?", new String[] {name}, null, null, null, null);
+        cursor = db.query(TABLE_USERS, new String[] {COLUMN_ID, COLUMN_USER_NAME, COLUMN_USER_DISEASE,
+                COLUMN_USER_SCORE}, COLUMN_USER_NAME + "=?", new String[] {name}, null, null, null, null);
         if (cursor.moveToFirst()){
             return true;
         }
@@ -77,9 +95,9 @@ public class DBHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
 
         values.put(COLUMN_ID, getUserCount() + 1);
-        values.put(COLUMN_SCORE, score);
-        values.put(COLUMN_NAME, name);
-        values.put(COLUMN_DISEASE, disease);
+        values.put(COLUMN_USER_SCORE, score);
+        values.put(COLUMN_USER_NAME, name);
+        values.put(COLUMN_USER_DISEASE, disease);
 
         db.insert(TABLE_USERS, null, values);
     }

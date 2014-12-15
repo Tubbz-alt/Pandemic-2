@@ -12,7 +12,6 @@ android:layout_width="fill_parent">
 
     <TextView
         android:id="@+id/leftTopInfoBar"
-        android:text="Hello World"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:textSize="20dip"
@@ -146,7 +145,7 @@ android:layout_width="fill_parent">
             android:textColor="#C00000"
             android:background="@color/light_grey"
             android:text="Blindness" />
-        <Button android:id="@+id/button_kidneyfailure"
+        <Button android:id="@+id/button_seizure"
             android:layout_width="0dip"
             android:layout_height="60dp"
             android:layout_marginRight="2dp"
@@ -156,7 +155,7 @@ android:layout_width="fill_parent">
             android:background="@color/light_grey"
             android:layout_gravity="center_vertical"
             android:text="Seizure" />
-        <Button android:id="@+id/button_hemorrhaging"
+        <Button android:id="@+id/button_rash"
             android:layout_width="0dip"
             android:layout_height="60dp"
             android:layout_weight="1"
