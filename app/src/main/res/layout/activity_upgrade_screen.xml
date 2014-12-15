@@ -49,21 +49,25 @@ android:layout_width="fill_parent">
         android:id="@+id/root"
         android:stretchColumns="*"
         android:background="#580000">
-        <TableRow android:layout_margin="0dip" android:paddingBottom="1dp"
-            android:paddingTop="1dp" android:id="@+id/first_level">
+        <TableRow android:layout_margin="0dip" android:paddingBottom="3dp"
+            android:paddingTop="3dp" android:id="@+id/first_level">
             <Button android:id="@+id/button_coughing"
                 android:layout_width="0dip"
                 android:layout_height="60dp"
+                android:layout_marginRight="2dp"
                 android:layout_weight="1"
                 android:padding="15dip"
                 android:textColor="#C00000"
-                android:text="Coughing" />
+                android:text="Coughing"
+                android:background="@color/light_grey"/>
             <Button android:id="@+id/button_sneezing"
                 android:layout_width="0dip"
                 android:layout_height="60dp"
+                android:layout_marginRight="2dp"
                 android:layout_weight="1"
                 android:padding="15dip"
                 android:textColor="#C00000"
+                android:background="@color/light_grey"
                 android:text="Sneezing" />
             <Button android:id="@+id/button_sweating"
                 android:layout_width="0dip"
@@ -71,23 +75,28 @@ android:layout_width="fill_parent">
                 android:layout_weight="1"
                 android:padding="15dip"
                 android:textColor="#C00000"
-                android:text="Sweating"/>
+                android:background="@color/light_grey"
+            android:text="Sweating"/>
         </TableRow>
-        <TableRow android:layout_margin="0dip" android:paddingBottom="1dp"
+        <TableRow android:layout_margin="0dip" android:paddingBottom="3dp"
             android:id="@+id/second_level">
             <Button android:id="@+id/button_chills"
                 android:layout_width="0dip"
                 android:layout_height="60dp"
+                android:layout_marginRight="2dp"
                 android:layout_weight="1"
                 android:padding="15dip"
                 android:textColor="#C00000"
+                android:background="@color/light_grey"
                 android:text="Chills"/>
             <Button android:id="@+id/button_fatigue"
                 android:layout_width="0dip"
                 android:layout_height="60dp"
+                android:layout_marginRight="2dp"
                 android:layout_weight="1"
                 android:padding="15dip"
                 android:textColor="#C00000"
+                android:background="@color/light_grey"
                 android:text="Fatigue"/>
             <Button android:id="@+id/button_nausea"
                 android:layout_width="0dip"
@@ -95,23 +104,28 @@ android:layout_width="fill_parent">
                 android:layout_weight="1"
                 android:padding="15dip"
                 android:textColor="#C00000"
+                android:background="@color/light_grey"
                 android:text="Nausea"/>
         </TableRow>
-        <TableRow android:layout_margin="0dip" android:paddingBottom="1dp"
+        <TableRow android:layout_margin="0dip" android:paddingBottom="3dp"
             android:id="@+id/third_level">
             <Button android:id="@+id/button_vomit"
                 android:layout_width="0dip"
                 android:layout_height="60dp"
+                android:layout_marginRight="2dp"
                 android:layout_weight="1"
                 android:padding="15dip"
                 android:textColor="#C00000"
+                android:background="@color/light_grey"
                 android:text="Vomit"/>
             <Button android:id="@+id/button_diarrhea"
                 android:layout_width="0dip"
                 android:layout_height="60dp"
+                android:layout_marginRight="2dp"
                 android:layout_weight="1"
                 android:padding="15dip"
                 android:textColor="#C00000"
+                android:background="@color/light_grey"
                 android:text="Diarrhea"/>
             <Button android:id="@+id/button_fever"
                 android:layout_width="0dip"
@@ -119,32 +133,37 @@ android:layout_width="fill_parent">
                 android:layout_weight="1"
                 android:padding="15dip"
                 android:textColor="#C00000"
+                android:background="@color/light_grey"
                 android:text="Fever"/>
-        </TableRow><TableRow android:layout_margin="0dip" android:paddingBottom="1dp"
+        </TableRow><TableRow android:layout_margin="0dip" android:paddingBottom="3dp"
         android:id="@+id/fourth_level">
         <Button android:id="@+id/button_blindness"
             android:layout_width="0dip"
             android:layout_height="60dp"
+            android:layout_marginRight="2dp"
             android:layout_weight="1"
             android:padding="15dip"
             android:textColor="#C00000"
+            android:background="@color/light_grey"
             android:text="Blindness" />
         <Button android:id="@+id/button_kidneyfailure"
             android:layout_width="0dip"
             android:layout_height="60dp"
+            android:layout_marginRight="2dp"
             android:layout_weight="1"
             android:padding="15dip"
             android:textColor="#C00000"
-            android:textSize="13sp"
-            android:text="Kidney Failure" />
+            android:background="@color/light_grey"
+            android:layout_gravity="center_vertical"
+            android:text="Seizure" />
         <Button android:id="@+id/button_hemorrhaging"
             android:layout_width="0dip"
             android:layout_height="60dp"
             android:layout_weight="1"
             android:padding="15dip"
             android:textColor="#C00000"
-            android:textSize="12sp"
-            android:text="Hemorrhaging"/>
+            android:background="@color/light_grey"
+            android:text="Rash"/>
     </TableRow>
     </TableLayout>
 
