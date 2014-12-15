@@ -1,6 +1,7 @@
 package com.hci.pandemic.pandemic;
 
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,7 +15,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 
-public class UpgradeScreen extends Activity {
+public class UpgradeScreen extends Activity implements SymptomDialogFragment.SymptomsDialogListener {
 
     private SharedPreferences mPrefs;
     private int ev_points, health_points, contagious_rating, lethality_rating;
@@ -151,6 +152,16 @@ public class UpgradeScreen extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog, int symptomID) {
+        //Log.i("APP", "symptom clicked is " + getSymptomFromListById(symptomID).toString());
+    }
+
+    @Override
+    public void onDialogNegativeClick(DialogFragment dialog, int symptomID) {
+        //Log.i("APP", "symptom clicked is " + getSymptomFromListById(symptomID).toString());
+    }
+
     // class that:
     //  - pulls the symptom info from DB and displays it
     //  - checks if user can buy the symptom
@@ -172,7 +183,24 @@ public class UpgradeScreen extends Activity {
             // get the info from the symptom id
               Symptom s =  getSymptomFromListById(symptom_id);
 
+            // pass it to the Dialog Fragment for the dialog to display the information
+            Bundle args = new Bundle();
+            args.putInt("id", s.get_id());
+            args.putString("name", s.getName());
+            args.putString("description", s.getDescription());
+            args.putInt("level", s.getLevel());
+            args.putInt("contagious", s.getContagiousness());
+            args.putInt("lethality", s.getLethality());
+            args.putInt("points_to_unlock", s.getPoints_to_unlock());
+            args.putBoolean("has_unlocked", s.is_unlocked());
+
+
+
             //populate a fragment / dialog with the data
+                DialogFragment symptomFragment = new SymptomDialogFragment();
+                symptomFragment.setArguments(args);
+
+                symptomFragment.show(getFragmentManager(), "symptoms_dialog");
 
             // based on user's choice, get data returned, modify the current view variables
             // accordingly

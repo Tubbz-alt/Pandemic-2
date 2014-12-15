@@ -88,11 +88,11 @@ public class Symptom {
     public void setPoints_to_unlock(int points_to_unlock) {
         this.points_to_unlock = points_to_unlock;
     }
-    public boolean isHas_unlocked() {
+    public boolean is_unlocked() {
         return has_unlocked;
     }
 
-    public void setHas_unlocked(boolean has_unlocked) {
+    public void set_unlocked(boolean has_unlocked) {
         this.has_unlocked = has_unlocked;
     }
 
