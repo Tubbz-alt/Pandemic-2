@@ -117,6 +117,7 @@ public class MapActivity extends Activity{
                         R.id.mapView)).getMap();
 
                 prev = new LatLng(0.0,0.0);
+                progress = 0;
 
                 /**
                  * If the map is still null after attempted initialisation,
@@ -323,9 +324,24 @@ public class MapActivity extends Activity{
                                 selfMarker.setPosition(temp);
                                 circle.setCenter(temp);
                                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(getCurrentLocation(), 19));
-                                if (insideRadius(enemyMarker.getPosition().latitude, enemyMarker.getPosition().longitude, 10.0)) {
-                                    TextView footer = (TextView) findViewById(R.id.footerText);
-                                    footer.setText("You are infecting someone!");
+                                if (insideRadius(enemyMarker.getPosition().latitude, enemyMarker.getPosition().longitude, 15.0)) {
+                                    RelativeLayout footer = (RelativeLayout) findViewById(R.id.footer);
+                                    footer.setVisibility(View.VISIBLE);
+                                    TextView footer2 = (TextView) findViewById(R.id.footerText);
+                                    footer2.setText("You are infecting someone!");
+                                }
+                                else if (insideRadius(bonusMarker.getPosition().latitude, bonusMarker.getPosition().longitude, 10.0)) {
+                                    RelativeLayout footer = (RelativeLayout) findViewById(R.id.footer);
+                                    footer.setVisibility(View.VISIBLE);
+                                    TextView footer2 = (TextView) findViewById(R.id.footerText);
+                                    footer2.setText("You have picked up a power-up!");
+                                    changeProgress(progress += 25);
+                                    bonusMarker.remove();
+                                }
+                                else
+                                {
+                                    RelativeLayout footer = (RelativeLayout) findViewById(R.id.footer);
+                                    footer.setVisibility(View.GONE);
                                 }
                                 prev = temp;
                             }
@@ -336,7 +352,8 @@ public class MapActivity extends Activity{
         }).start();
 
         //Test progress bar, remove later
-        progress = 0;
+        /*
+
         new Thread(new Runnable() {
             public void run() {
                 while(true)
@@ -351,7 +368,7 @@ public class MapActivity extends Activity{
                         progress = 0;
                 }
             }
-        }).start();
+        }).start();*/
 
         Log.d("mapApp", "Thread running");
     }

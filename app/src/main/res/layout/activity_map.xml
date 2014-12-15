@@ -29,7 +29,7 @@
             android:background="@drawable/circle_shape"
             style="?android:attr/progressBarStyleHorizontal"
             android:max="100"
-            android:progress="10" />
+            android:progress="0" />
 
         <TextView
             android:id="@+id/descripText"
@@ -101,6 +101,7 @@
         android:layout_height="32dp"
         android:layout_alignParentBottom="true"
         android:background="#000"
+        android:visibility="gone"
         android:gravity="center" >
 
         <TextView
@@ -261,7 +262,7 @@
 
         <TextView
             android:id="@+id/bonusText2"
-            android:text="Temporarily allows you you to see another player's stats!\nLasts for 2 hours."
+            android:text="+25 Experience Points"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textSize="18dp"
