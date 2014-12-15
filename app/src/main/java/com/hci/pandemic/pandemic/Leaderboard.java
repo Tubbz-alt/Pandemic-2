@@ -1,6 +1,7 @@
 package com.hci.pandemic.pandemic;
 
 import android.app.ListActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -52,13 +53,17 @@ public class Leaderboard extends ListActivity {
         final TextView tv = (TextView) findViewById(R.id.leaderboard_popup);
         final TextView instruction = (TextView) findViewById(R.id.popupinstruction);
 
-        ListView lv = getListView();
+        //ListView lv = getListView();
 
         LayoutInflater inflater = getLayoutInflater();
-        View header = inflater.inflate(R.layout.header, lv, false);
-        lv.addHeaderView(header, null, false);
+        View header = inflater.inflate(R.layout.header, getListView(), false);
+        
+        // error here
+       // lv.addHeaderView(header);
+        getListView().addHeaderView(header,null,false);
 
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+        getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.i("Info", String.valueOf(position));
@@ -96,13 +101,16 @@ public class Leaderboard extends ListActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.map_screen_menu) {
-            Util.launchMapActivity(this);
+            Intent intent = new Intent(this, MapActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
             return true;
         } else if (id == R.id.upgrade_screen_menu) {
-            Util.launchUpgradeScreenActivity(this);
+            Intent intent = new Intent(this, UpgradeScreen.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
             return true;
         } else if (id == R.id.leaderboard_screen_menu) {
-            Util.launchLeaderboardActivity(this);
             return true;
         }
 

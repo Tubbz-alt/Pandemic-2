@@ -67,8 +67,7 @@
             android:layout_height="64dp"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
-            android:scaleType="fitXY"
-            android:onClick="changeToUpgrade"/>
+            android:scaleType="fitXY"/>
 
         <ImageButton
             android:id="@+id/btn_leaderboard"
@@ -78,8 +77,7 @@
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:layout_marginLeft="8dp"
-            android:layout_marginTop="84dp"
-            android:onClick="changeToLeaderboard"/>
+            android:layout_marginTop="84dp"/>
 
     </FrameLayout>
 
