@@ -13,6 +13,7 @@ public class Symptom {
     int lethality;
     int points_to_unlock;
     boolean has_unlocked;
+    String bool_string;
 
     // java bean compatibility
     public Symptom() {
@@ -22,7 +23,8 @@ public class Symptom {
         this._id = _id;
     }
 
-    public Symptom(int _id, String name, String description,  int level, int contagiousness, int lethality, int points_to_unlock) {
+
+    public Symptom(int _id, String name, String description,  int level, int contagiousness, int lethality, int points_to_unlock, boolean has_unlocked, String bool_string) {
         this._id = _id;
         this.name = name;
         this.level = level;
@@ -30,7 +32,18 @@ public class Symptom {
         this.contagiousness = contagiousness;
         this.lethality = lethality;
         this.points_to_unlock = points_to_unlock;
-        this.has_unlocked = false;
+        this.has_unlocked = has_unlocked;
+        this.bool_string = bool_string;
+
+    }
+
+
+    public String getBool_string() {
+        return bool_string;
+    }
+
+    public void setBool_string(String bool_string) {
+        this.bool_string = bool_string;
     }
 
     public String getName() {
@@ -88,7 +101,7 @@ public class Symptom {
     public void setPoints_to_unlock(int points_to_unlock) {
         this.points_to_unlock = points_to_unlock;
     }
-    public boolean is_unlocked() {
+    public boolean has_unlocked() {
         return has_unlocked;
     }
 

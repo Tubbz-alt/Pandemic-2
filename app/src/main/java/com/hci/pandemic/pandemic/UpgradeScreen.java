@@ -12,19 +12,22 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 
 
 public class UpgradeScreen extends Activity implements SymptomDialogFragment.SymptomsDialogListener {
 
+    // variables for this activity
     private SharedPreferences mPrefs;
-    private int ev_points, health_points, contagious_rating, lethality_rating;
+    private ArrayList<Symptom> symptomArrayList;
+    private int ev_points, health_points, contagious_rating, lethality_rating, current_level;
     private boolean has_cough, has_sneeze, has_sweat, has_chills, has_fatigue, has_nausea,
                     has_vomit, has_diarrhea, has_fever, has_blind, has_seizure, has_rash;
 
-    private ArrayList<Symptom> symptomArrayList;
 
-    // elements on page
+    // elements from the activity layout XML file
     TextView evolution_points_tv, health_points_tv, contagious_points_tv, lethal_points_tv;
     Button button_coughing,button_sneezing,button_sweating,button_chills,button_fatigue,
            button_nausea, button_vomit,button_diarrhea,button_fever,button_blindness,button_seizure,
@@ -34,52 +37,24 @@ public class UpgradeScreen extends Activity implements SymptomDialogFragment.Sym
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // get preferences
+        // get preferences (persistence settings)
         mPrefs = getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
         ev_points = mPrefs.getInt("ev_points", 30);
         health_points = mPrefs.getInt("health", 100);
         contagious_rating = mPrefs.getInt("contagious", 7);
         lethality_rating = mPrefs.getInt("lethal", 5);
+        current_level = mPrefs.getInt("currLevel", 1);
 
-        has_cough = mPrefs.getBoolean("cough_bool", false);
-        has_sneeze = mPrefs.getBoolean("sneeze_bool", false);
-        has_sweat = mPrefs.getBoolean("sweat_bool", false);
-        has_chills = mPrefs.getBoolean("chills_bool", false);
-        has_fatigue = mPrefs.getBoolean("fatigue_bool", false);
-        has_nausea = mPrefs.getBoolean("nausea_bool", false);
-        has_vomit = mPrefs.getBoolean("vomit_bool", false);
-        has_diarrhea = mPrefs.getBoolean("diarrhea_bool", false);
-        has_fever = mPrefs.getBoolean("fever_bool", false);
-        has_blind = mPrefs.getBoolean("blind_bool", false);
-        has_seizure = mPrefs.getBoolean("seizure_bool", false);
-        has_rash = mPrefs.getBoolean("rash_bool", false);
+        updateBooleans();
 
         symptomArrayList = getAllSymptoms();
-        // get all the symptoms in the DB
-//        DBHelper dbHelper = new DBHelper(this);
-
-//        prepopulateSymptomTable(dbHelper);
-//        final List<Symptom> symptomList = dbHelper.getAllSymptoms();
-
-
-        //Log.i("APP","symptom for coughing is:" + symptomList.toArray()[0].toString());
 
         // display the page
         setContentView(R.layout.activity_upgrade_screen);
 
 
         // change the amount of points you have based on shared prefs
-        evolution_points_tv = (TextView) findViewById(R.id.rightTopInfoBar);
-        evolution_points_tv.setText(String.valueOf(ev_points) + " Evolution Points");
-
-        health_points_tv = (TextView) findViewById(R.id.health_stat);
-        health_points_tv.setText("Health Points: " + String.valueOf(health_points));
-
-        contagious_points_tv = (TextView) findViewById(R.id.contagious_stat);
-        contagious_points_tv.setText("Contagious Rating: " + String.valueOf(contagious_rating));
-
-        lethal_points_tv = (TextView) findViewById(R.id.lethal_stat);
-        lethal_points_tv.setText("Lethality Rating: " + String.valueOf(lethality_rating));
+        updateViews();
 
 
         // instantiate button onClick listeners for every button
@@ -120,6 +95,36 @@ public class UpgradeScreen extends Activity implements SymptomDialogFragment.Sym
         button_rash.setOnClickListener(new SymptomsOnClickListener(12));
     }
 
+    private void updateBooleans() {
+        has_cough = mPrefs.getBoolean("cough_bool", false);
+        has_sneeze = mPrefs.getBoolean("sneeze_bool", false);
+        has_sweat = mPrefs.getBoolean("sweat_bool", false);
+        has_chills = mPrefs.getBoolean("chills_bool", false);
+        has_fatigue = mPrefs.getBoolean("fatigue_bool", false);
+        has_nausea = mPrefs.getBoolean("nausea_bool", false);
+        has_vomit = mPrefs.getBoolean("vomit_bool", false);
+        has_diarrhea = mPrefs.getBoolean("diarrhea_bool", false);
+        has_fever = mPrefs.getBoolean("fever_bool", false);
+        has_blind = mPrefs.getBoolean("blind_bool", false);
+        has_seizure = mPrefs.getBoolean("seizure_bool", false);
+        has_rash = mPrefs.getBoolean("rash_bool", false);
+    }
+
+    // update all the variables on the screen
+    private void updateViews() {
+        evolution_points_tv = (TextView) findViewById(R.id.rightTopInfoBar);
+        evolution_points_tv.setText(String.valueOf(ev_points) + " Evolution Points");
+
+        health_points_tv = (TextView) findViewById(R.id.health_stat);
+        health_points_tv.setText("Health Points: " + String.valueOf(health_points));
+
+        contagious_points_tv = (TextView) findViewById(R.id.contagious_stat);
+        contagious_points_tv.setText("Contagious Rating: " + String.valueOf(contagious_rating));
+
+        lethal_points_tv = (TextView) findViewById(R.id.lethal_stat);
+        lethal_points_tv.setText("Lethality Rating: " + String.valueOf(lethality_rating));
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -152,29 +157,113 @@ public class UpgradeScreen extends Activity implements SymptomDialogFragment.Sym
         return super.onOptionsItemSelected(item);
     }
 
+    // callback method that:
+    //  - checks to see if the user can get the symptom
+    //  - modify the variables on the screen and the dialog box to show the symptom has been bought
+    //  - record the transaction and persist the data
     @Override
     public void onDialogPositiveClick(DialogFragment dialog, int symptomID) {
+        Symptom s = getSymptomFromListById(symptomID);
+        Log.i("APP", "symptom clicked is " + s.toString());
+
+    // null checks
+        // make sure you don't already have the symptom
+        if (s.has_unlocked()){
+            Toast.makeText(getApplicationContext(), "You have already unlocked " +
+                    "this symptom!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // make sure the user has the right level
+        if (current_level < s.getLevel()){
+            Toast.makeText(getApplicationContext(), "You do not have not unlocked enough symptoms " +
+                    "to purchase one from this tier.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // make sure the user has enough points
+        if (ev_points < s.getPoints_to_unlock()){
+            Toast.makeText(getApplicationContext(), "You do not have not enough points to " +
+                    "unlock this symptom.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+    // at this point, the user can purchase the symptom
+        s.set_unlocked(true);
+        ev_points -= s.getPoints_to_unlock();
+        contagious_rating += s.getContagiousness();
+        lethality_rating += s.getLethality();
+
+        if (checkForLevelUpgrade()){
+            current_level++;
+        }
+
+
+        // store the changes indefinitely
+        SharedPreferences.Editor editor = mPrefs.edit();
+        editor.putBoolean(s.bool_string, s.has_unlocked());
+        editor.putInt("currLevel", current_level);
+        editor.putInt("ev_points", ev_points);
+        editor.putInt("contagious", contagious_rating);
+        editor.putInt("lethal", lethality_rating);
+        editor.putInt("currLevel", current_level);
+        editor.commit();
+
+        //update the boolean values:
+        updateBooleans();
+
+        // update the views:
+        updateViews();
 
     }
 
+    private boolean checkForLevelUpgrade() {
+        int twoThirds = 0;
+
+        switch (current_level){
+            case 1:
+                if(has_cough){twoThirds++;}
+                if(has_sneeze){twoThirds++;}
+                if(has_sweat){twoThirds++;}
+                if (twoThirds >= 2){ return true;}
+                break;
+
+            case 2:
+                if(has_chills){twoThirds++;}
+                if(has_fatigue){twoThirds++;}
+                if(has_nausea){twoThirds++;}
+                if (twoThirds >= 2){ return true;}
+                break;
+            case 3:
+                if(has_vomit){twoThirds++;}
+                if(has_diarrhea){twoThirds++;}
+                if(has_fever){twoThirds++;}
+                if (twoThirds >= 2){ return true;}
+                break;
+            case 4: return false ;
+            default:
+                return false;
+        }
+
+        return false;
+    }
+
+    // returns without doing anything b/c the user canceled the request
     @Override
     public void onDialogNegativeClick(DialogFragment dialog, int symptomID) {
-        //Log.i("APP", "symptom clicked is " + getSymptomFromListById(symptomID).toString());
+        Log.i("APP", "symptom clicked is " + getSymptomFromListById(symptomID).toString());
+        updateBooleans();
     }
 
-    // class that:
-    //  - pulls the symptom info from DB and displays it
-    //  - checks if user can buy the symptom
-    //  - if bought, change the number of ev points available
+    //  class that pulls the symptom info from ArrayList and displays it in a dialog
     private class SymptomsOnClickListener implements View.OnClickListener{
 
         int symptom_id;
 
-        // pass in an int which corresponds to the actual symptom_id in the db
+        // constructor that passes an int that corresponds to the symptom_id
         public SymptomsOnClickListener(int id){
             this.symptom_id = id;
         }
-
 
 
         @Override
@@ -192,9 +281,7 @@ public class UpgradeScreen extends Activity implements SymptomDialogFragment.Sym
             args.putInt("contagious", s.getContagiousness());
             args.putInt("lethality", s.getLethality());
             args.putInt("points_to_unlock", s.getPoints_to_unlock());
-            args.putBoolean("has_unlocked", s.is_unlocked());
-
-
+            args.putBoolean("has_unlocked", s.has_unlocked());
 
             //populate a fragment / dialog with the data
                 DialogFragment symptomFragment = new SymptomDialogFragment();
@@ -208,22 +295,7 @@ public class UpgradeScreen extends Activity implements SymptomDialogFragment.Sym
         }
     }
 
-//    public void prepopulateSymptomTable(DBHelper dbHelper){
-//
-//        dbHelper.addSymptom(new Symptom(1,"coughing", "A cough is a forceful release of air from the lungs that can be heard.", 1, 2, 1, 3));
-//        dbHelper.addSymptom(new Symptom(2,"sneezing", "A sneeze is a sudden involuntary expulsion of air from the nose and mouth due to irritation of one's nostrils.", 1, 2, 1, 4));
-//        dbHelper.addSymptom(new Symptom(3,"sweating", "Sweating is moisture exuded through the pores of the skin, typically in profuse quantities as a reaction to heat, physical exertion, fever, or fear.", 1,1,3, 3));
-//        dbHelper.addSymptom(new Symptom(4, "chills", "Chills are a sensation of coldness, often accompanied by shivering and pallor of the skin.", 2, 0, 3, 7));
-//        dbHelper.addSymptom(new Symptom(5, "fatigue", "Fatigue: extreme tiredness, typically resulting from mental or physical exertion or illness.", 2, 0, 4, 5));
-//        dbHelper.addSymptom(new Symptom(6, "nausea", "Nausea is a feeling of sickness with an inclination to vomit.", 2, 1, 3, 8));
-//        dbHelper.addSymptom(new Symptom(7, "vomit", "To vomit is to eject matter from the stomach through the mouth.", 3, 3, 2, 11));
-//        dbHelper.addSymptom(new Symptom(8, "diarrhea", "Diarrhea is a condition in which feces are discharged from the bowels frequently and in a liquid form.",3,4,4, 13));
-//        dbHelper.addSymptom(new Symptom(9, "fever", "Fever is an abnormally high body temperature, usually accompanied by shivering, headache, and in severe instances, delirium.", 3, 2,6, 10));
-//        dbHelper.addSymptom(new Symptom(10, "blindness", "Blindness: unable to see; lacking the sense of sight; sightless", 4, 0, 10, 15));
-//        dbHelper.addSymptom(new Symptom(11, "seizure", "A Seizure is uncontrolled electrical activity in the brain, which may produce a physical convulsion, minor physical signs, thought disturbances, or a combination of symptoms.", 4, 0, 8, 18));
-//        dbHelper.addSymptom(new Symptom(12, "rash", "Rash: an eruption on the body typically with little or no elevation above the surface.", 4, 12, 6, 13));
-//    }
-
+    // method that gets the data this activity uses
     public ArrayList<Symptom> getAllSymptoms(){
         if(symptomArrayList != null){
             return symptomArrayList;
@@ -231,23 +303,24 @@ public class UpgradeScreen extends Activity implements SymptomDialogFragment.Sym
         else{
             symptomArrayList = new ArrayList<Symptom>();
 
-            symptomArrayList.add(new Symptom(1,"coughing", "A cough is a forceful release of air from the lungs that can be heard.", 1, 2, 1, 3));
-            symptomArrayList.add(new Symptom(2,"sneezing", "A sneeze is a sudden involuntary expulsion of air from the nose and mouth due to irritation of one's nostrils.", 1, 2, 1, 4));
-            symptomArrayList.add(new Symptom(3,"sweating", "Sweating is moisture exuded through the pores of the skin, typically in profuse quantities as a reaction to heat, physical exertion, fever, or fear.", 1,1,3, 3));
-            symptomArrayList.add(new Symptom(4, "chills", "Chills are a sensation of coldness, often accompanied by shivering and pallor of the skin.", 2, 0, 3, 7));
-            symptomArrayList.add(new Symptom(5, "fatigue", "Fatigue: extreme tiredness, typically resulting from mental or physical exertion or illness.", 2, 0, 4, 5));
-            symptomArrayList.add(new Symptom(6, "nausea", "Nausea is a feeling of sickness with an inclination to vomit.", 2, 1, 3, 8));
-            symptomArrayList.add(new Symptom(7, "vomit", "To vomit is to eject matter from the stomach through the mouth.", 3, 3, 2, 11));
-            symptomArrayList.add(new Symptom(8, "diarrhea", "Diarrhea is a condition in which feces are discharged from the bowels frequently and in a liquid form.",3,4,4, 13));
-            symptomArrayList.add(new Symptom(9, "fever", "Fever is an abnormally high body temperature, usually accompanied by shivering, headache, and in severe instances, delirium.", 3, 2,6, 10));
-            symptomArrayList.add(new Symptom(10, "blindness", "Blindness: unable to see; lacking the sense of sight; sightless", 4, 0, 10, 15));
-            symptomArrayList.add(new Symptom(11, "seizure", "A Seizure is uncontrolled electrical activity in the brain, which may produce a physical convulsion, minor physical signs, thought disturbances, or a combination of symptoms.", 4, 0, 8, 18));
-            symptomArrayList.add(new Symptom(12, "rash", "Rash: an eruption on the body typically with little or no elevation above the surface.", 4, 12, 6, 13));
+            symptomArrayList.add(new Symptom(1,"coughing", "A cough is a forceful release of air from the lungs that can be heard.", 1, 2, 1, 3, has_cough,"cough_bool"));
+            symptomArrayList.add(new Symptom(2,"sneezing", "A sneeze is a sudden involuntary expulsion of air from the nose and mouth due to irritation of one's nostrils.", 1, 2, 1, 4, has_sneeze, "sneeze_bool"));
+            symptomArrayList.add(new Symptom(3,"sweating", "Sweating is moisture exuded through the pores of the skin, typically in profuse quantities as a reaction to heat, physical exertion, fever, or fear.", 1,1,3,3, has_sweat, "sweat_bool"));
+            symptomArrayList.add(new Symptom(4, "chills", "Chills are a sensation of coldness, often accompanied by shivering and pallor of the skin.", 2, 0, 3, 7, has_chills, "chills_bool"));
+            symptomArrayList.add(new Symptom(5, "fatigue", "Fatigue: extreme tiredness, typically resulting from mental or physical exertion or illness.", 2, 0, 4, 5, has_fatigue, "fatigue_bool"));
+            symptomArrayList.add(new Symptom(6, "nausea", "Nausea is a feeling of sickness with an inclination to vomit.", 2, 1, 3, 8, has_nausea, "nausea_bool"));
+            symptomArrayList.add(new Symptom(7, "vomit", "To vomit is to eject matter from the stomach through the mouth.", 3, 3, 2, 11, has_vomit, "vomit_bool"));
+            symptomArrayList.add(new Symptom(8, "diarrhea", "Diarrhea is a condition in which feces are discharged from the bowels frequently and in a liquid form.",3,4,4, 13, has_diarrhea, "diarrhea_bool"));
+            symptomArrayList.add(new Symptom(9, "fever", "Fever is an abnormally high body temperature, usually accompanied by shivering, headache, and in severe instances, delirium.", 3, 2,6, 10, has_fever, "fever_bool"));
+            symptomArrayList.add(new Symptom(10, "blindness", "Blindness: unable to see; lacking the sense of sight; sightless", 4, 0, 10,15, has_blind, "blind_bool"));
+            symptomArrayList.add(new Symptom(11, "seizure", "A Seizure is uncontrolled electrical activity in the brain, which may produce a physical convulsion, minor physical signs, thought disturbances, or a combination of symptoms.", 4, 0, 8, 18, has_seizure, "seizure_bool"));
+            symptomArrayList.add(new Symptom(12, "rash", "Rash: an eruption on the body typically with little or no elevation above the surface.", 4, 12, 6, 13, has_rash, "rash_bool"));
 
             return symptomArrayList;
         }
     }
 
+    // aux method to pull a symptom by its id
     public Symptom getSymptomFromListById(int id){
         for (Symptom s : symptomArrayList){
             if (s.get_id() == id)

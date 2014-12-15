@@ -30,7 +30,7 @@ public class SymptomDialogFragment extends DialogFragment {
         // unpack the bundle
         Bundle bundle = getArguments();
 
-        int id = bundle.getInt("id");
+        final int symptomID = bundle.getInt("id");
         String name = bundle.getString("name");
         String description = bundle.getString("description");
         int level = bundle.getInt("level");
@@ -60,13 +60,13 @@ public class SymptomDialogFragment extends DialogFragment {
                     public void onClick(DialogInterface dialog, int id) {
                         // User accepted the setting
                         // Send the positive button event back to the host activity
-                        mListener.onDialogPositiveClick(SymptomDialogFragment.this, id);
+                        mListener.onDialogPositiveClick(SymptomDialogFragment.this, symptomID);
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // User cancelled the dialog
-                        mListener.onDialogPositiveClick(SymptomDialogFragment.this, id);
+                        mListener.onDialogPositiveClick(SymptomDialogFragment.this, symptomID);
                     }
                 });
         // Create the AlertDialog object and return it
