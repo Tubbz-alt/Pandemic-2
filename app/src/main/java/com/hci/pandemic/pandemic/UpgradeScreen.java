@@ -5,6 +5,7 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class UpgradeScreen extends Activity implements SymptomDialogFragment.SymptomsDialogListener {
@@ -22,7 +24,9 @@ public class UpgradeScreen extends Activity implements SymptomDialogFragment.Sym
     // variables for this activity
     private SharedPreferences mPrefs;
     private ArrayList<Symptom> symptomArrayList;
-    private int ev_points, health_points, contagious_rating, lethality_rating, current_level;
+    private HashMap<Integer, Button> buttonHashMap;
+    private int ev_points, health_points, contagious_rating, lethality_rating, current_level,
+                num_symptoms;
     private boolean has_cough, has_sneeze, has_sweat, has_chills, has_fatigue, has_nausea,
                     has_vomit, has_diarrhea, has_fever, has_blind, has_seizure, has_rash;
 
@@ -44,9 +48,11 @@ public class UpgradeScreen extends Activity implements SymptomDialogFragment.Sym
         contagious_rating = mPrefs.getInt("contagious", 7);
         lethality_rating = mPrefs.getInt("lethal", 5);
         current_level = mPrefs.getInt("currLevel", 1);
+        num_symptoms = mPrefs.getInt("numSymptoms", 0);
 
         updateBooleans();
 
+        //data structures
         symptomArrayList = getAllSymptoms();
 
         // display the page
@@ -93,6 +99,9 @@ public class UpgradeScreen extends Activity implements SymptomDialogFragment.Sym
 
         button_rash = (Button) findViewById(R.id.button_rash);
         button_rash.setOnClickListener(new SymptomsOnClickListener(12));
+
+        buttonHashMap = ButtonHashMap();
+
     }
 
     private void updateBooleans() {
@@ -123,6 +132,7 @@ public class UpgradeScreen extends Activity implements SymptomDialogFragment.Sym
 
         lethal_points_tv = (TextView) findViewById(R.id.lethal_stat);
         lethal_points_tv.setText("Lethality Rating: " + String.valueOf(lethality_rating));
+
     }
 
     @Override
@@ -193,6 +203,8 @@ public class UpgradeScreen extends Activity implements SymptomDialogFragment.Sym
         ev_points -= s.getPoints_to_unlock();
         contagious_rating += s.getContagiousness();
         lethality_rating += s.getLethality();
+        num_symptoms++;
+
 
         if (checkForLevelUpgrade()){
             current_level++;
@@ -207,6 +219,7 @@ public class UpgradeScreen extends Activity implements SymptomDialogFragment.Sym
         editor.putInt("contagious", contagious_rating);
         editor.putInt("lethal", lethality_rating);
         editor.putInt("currLevel", current_level);
+        editor.putInt("numSymptoms", num_symptoms);
         editor.commit();
 
         //update the boolean values:
@@ -215,30 +228,33 @@ public class UpgradeScreen extends Activity implements SymptomDialogFragment.Sym
         // update the views:
         updateViews();
 
+        // change the color to selected after the symptom has been purchased
+         changeBackgroundColor(s);
+
     }
 
+    // changes background color for symptoms that have been saved
+    private void changeBackgroundColor(Symptom s){
+        Button symptomButton = buttonHashMap.get(s.get_id());
+        symptomButton.setBackgroundColor(Color.DKGRAY);
+    }
+
+
     private boolean checkForLevelUpgrade() {
-        int twoThirds = 0;
 
         switch (current_level){
             case 1:
-                if(has_cough){twoThirds++;}
-                if(has_sneeze){twoThirds++;}
-                if(has_sweat){twoThirds++;}
-                if (twoThirds >= 2){ return true;}
+                if(num_symptoms >= 2)
+                    return true;
                 break;
 
             case 2:
-                if(has_chills){twoThirds++;}
-                if(has_fatigue){twoThirds++;}
-                if(has_nausea){twoThirds++;}
-                if (twoThirds >= 2){ return true;}
+                if(num_symptoms >=4)
+                    return true;
                 break;
             case 3:
-                if(has_vomit){twoThirds++;}
-                if(has_diarrhea){twoThirds++;}
-                if(has_fever){twoThirds++;}
-                if (twoThirds >= 2){ return true;}
+                if(num_symptoms >= 7)
+                    return true;
                 break;
             case 4: return false ;
             default:
@@ -247,6 +263,8 @@ public class UpgradeScreen extends Activity implements SymptomDialogFragment.Sym
 
         return false;
     }
+
+
 
     // returns without doing anything b/c the user canceled the request
     @Override
@@ -318,6 +336,24 @@ public class UpgradeScreen extends Activity implements SymptomDialogFragment.Sym
 
             return symptomArrayList;
         }
+    }
+
+    public HashMap<Integer,Button> ButtonHashMap(){
+        HashMap<Integer,Button> map = new HashMap<Integer,Button>();
+        map.put(1, button_coughing);
+        map.put(2, button_sneezing);
+        map.put(3, button_sweating);
+        map.put(4, button_chills);
+        map.put(5, button_fatigue);
+        map.put(6, button_nausea);
+        map.put(7, button_vomit);
+        map.put(8, button_diarrhea);
+        map.put(9, button_fever);
+        map.put(10, button_blindness);
+        map.put(11,button_seizure);
+        map.put(12, button_rash);
+
+        return map;
     }
 
     // aux method to pull a symptom by its id
