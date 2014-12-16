@@ -66,7 +66,7 @@ public class SymptomDialogFragment extends DialogFragment {
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // User cancelled the dialog
-                        mListener.onDialogPositiveClick(SymptomDialogFragment.this, symptomID);
+                        mListener.onDialogNegativeClick(SymptomDialogFragment.this, symptomID);
                     }
                 });
         // Create the AlertDialog object and return it

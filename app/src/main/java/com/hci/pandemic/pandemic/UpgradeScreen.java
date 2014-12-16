@@ -270,7 +270,6 @@ public class UpgradeScreen extends Activity implements SymptomDialogFragment.Sym
     @Override
     public void onDialogNegativeClick(DialogFragment dialog, int symptomID) {
         Log.i("APP", "symptom clicked is " + getSymptomFromListById(symptomID).toString());
-        updateBooleans();
     }
 
     //  class that pulls the symptom info from ArrayList and displays it in a dialog
