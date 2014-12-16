@@ -286,7 +286,11 @@ public class MapActivity extends Activity{
 
         // Create a LatLng object for the current location
         LatLng latLng = new LatLng(latitude, longitude);
+<<<<<<< HEAD
         // Log.d("mapApp", latitude + " " + longitude);
+=======
+       // Log.d("mapApp", latitude + " " + longitude);
+>>>>>>> origin/Stevenbranch
         return latLng;
     }
 
@@ -320,6 +324,7 @@ public class MapActivity extends Activity{
                         public void run()
                         {
                             LatLng temp = getCurrentLocation();
+<<<<<<< HEAD
                             if (!temp.equals(prev)) {
                                 selfMarker.setPosition(temp);
                                 circle.setCenter(temp);
@@ -344,6 +349,13 @@ public class MapActivity extends Activity{
                                     footer.setVisibility(View.GONE);
                                 }
                                 prev = temp;
+=======
+                            selfMarker.setPosition(temp);
+                            //googleMap.moveCamera(CameraUpdateFactory.newLatLng(getCurrentLocation()));
+                            if (insideRadius(enemyMarker.getPosition().latitude, enemyMarker.getPosition().longitude, 10.0)) {
+                                TextView footer = (TextView) findViewById(R.id.footerText);
+                                footer.setText("You are infecting someone!");
+>>>>>>> origin/Stevenbranch
                             }
                         }
                     });
@@ -368,7 +380,18 @@ public class MapActivity extends Activity{
                         progress = 0;
                 }
             }
+<<<<<<< HEAD
         }).start();*/
+=======
+        }).start();
+
+        Log.d("mapApp", "Thread running");
+    }
+
+    public void changeToUpgrade() {
+        //TO DO
+    }
+>>>>>>> origin/Stevenbranch
 
         Log.d("mapApp", "Thread running");
     }
